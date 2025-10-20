@@ -10,17 +10,27 @@ public class Juego extends InterfaceJuego
 {
 	// El objeto Entorno que controla el tiempo y otros
 	private Entorno entorno;
-	
+	private Estado estado;
+	private Reloj reloj;
+	private Cripta cripta;
+	private Menu menu;
 	// Variables y métodos propios de cada grupo
 	// ...
 	
 	Juego()
 	{
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 800, 600);
+		this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 1200, 800);
 		
 		// Inicializar lo que haga falta para el juego
-		// ...
+		this.estado = new Estado();
+		this.reloj = new Reloj(this.entorno, this.estado, 0);
+		this.menu = new Menu(this.entorno, this.estado, this.reloj);
+		this.cripta = new Cripta(this.entorno, this.estado);
+		
+		estado.setEstado(2);
+
+		
 
 		// Inicia el juego!
 		this.entorno.iniciar();
@@ -34,6 +44,21 @@ public class Juego extends InterfaceJuego
 	 */
 	public void tick()
 	{
+		////////////////////////////GESTION DEL RELOJ///////////////////////////////////////
+		if(estado.esJuego() && estado.estadoAnterior == 1)
+			reloj.tiempoObjeto(true, false, false, false);
+		if(estado.esPausa() && estado.estadoAnterior == 2)
+			reloj.tiempoObjeto(false, true, false, false);
+		if(estado.esJuego() && estado.estadoAnterior == 3)
+			reloj.tiempoObjeto(false, false, true, false);
+		if(estado.esJuego())
+			reloj.tiempoObjeto(false, false, false, true);
+		estado.estadoAnterior = estado.getEstado();	
+		////////////////////////////////////////////////////////////////////////////////////
+		
+		if (estado.esJuego()) {
+			menu.dibujarMenu();
+		}
 		// Procesamiento de un instante de tiempo
 		// ...
 		
