@@ -18,11 +18,7 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 	public void dibujarMenu() {
 		if(estado.esJuego()) {
 			reloj.mostrarTiempo(50, 650, 50);
-			
-			if(reloj.ciclos(200, 400))
-				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 400, 303, 0);
-			else
-				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto2.png"), 400, 303, 0);
+				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
 		}
 	}
 }

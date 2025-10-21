@@ -2,18 +2,18 @@ package juego;
 import entorno.Entorno;
 import entorno.Herramientas;
 
-public class ZBase {
+public class ZAlter {
 	private Entorno entorno;
 	private Estado estado;
 	private Reloj reloj;
 	
 	boolean vivo = false;
 	
-	public ZBase(Entorno entorno, Estado estado, Reloj reloj) {
+	public ZAlter(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
 		this.estado = estado;
 		this.reloj = reloj;
 
 }
-	}
 
+}

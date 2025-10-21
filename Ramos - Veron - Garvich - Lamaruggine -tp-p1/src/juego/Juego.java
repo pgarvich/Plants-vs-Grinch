@@ -20,13 +20,13 @@ public class Juego extends InterfaceJuego
 	Juego()
 	{
 		// Inicializa el objeto entorno
-		this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 1200, 800);
+		this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 1400, 800);
 		
 		// Inicializar lo que haga falta para el juego
 		this.estado = new Estado();
 		this.reloj = new Reloj(this.entorno, this.estado, 0);
 		this.menu = new Menu(this.entorno, this.estado, this.reloj);
-		this.cripta = new Cripta(this.entorno, this.estado);
+		this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
 		
 		estado.setEstado(2);
 
