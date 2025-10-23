@@ -40,20 +40,21 @@ public class Cripta {
 	}
 	
 	public void dibujarZombies() {
-		if(estado.getEstado()==2) {
+		
 			 for(int i = 0; i < zBase.length; i++) {		//dibujar zombies base
 		            if (zBase[i] == null) 
 		                continue;
-			 if(zBase[i].vivo) {
-				 zBase[i].desplazar();
-                 if (reloj.ciclos(200, 400)) {
-                     entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase1.png"), zBase[i].posX, zBase[i].posY, 0);
-                 } else {
-                     entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase2.png"), zBase[i].posX, zBase[i].posY, 0);
+		            if(zBase[i].vivo) {
+		            	zBase[i].desplazar();
+		            	if (reloj.ciclos(200, 400)) {
+		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase1.png"), zBase[i].posX, zBase[i].posY, 0);
+                 }
+		            	else {
+		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase2.png"), zBase[i].posX, zBase[i].posY, 0);
                  }			 
 			 }
-			 }
-		}
+		 }
+		
 	}
 	
 	public void spawnZombies() {
@@ -61,7 +62,7 @@ public class Cripta {
 	        return;
 	    }
 	    contarTicks(false);
-	    if(cuantosTicks > 100) {
+	    if(cuantosTicks > 200) {
 	    
 	    int linea = (int) (Math.random() * 5) + 1;
 	    int posI;

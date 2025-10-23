@@ -1,6 +1,5 @@
 package juego;
 
-
 import java.awt.Color;
 
 import entorno.Entorno;
@@ -14,6 +13,7 @@ public class Juego extends InterfaceJuego
 	private Reloj reloj;
 	private Cripta cripta;
 	private Menu menu;
+	private Jardin jardin;
 	// Variables y métodos propios de cada grupo
 	// ...
 	
@@ -27,6 +27,7 @@ public class Juego extends InterfaceJuego
 		this.reloj = new Reloj(this.entorno, this.estado, 0);
 		this.menu = new Menu(this.entorno, this.estado, this.reloj);
 		this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
+		this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu);
 		
 		estado.setEstado(2);
 
@@ -62,6 +63,10 @@ public class Juego extends InterfaceJuego
 			menu.dibujarMenu();
 			cripta.spawnZombies();
 			cripta.dibujarZombies();
+			jardin.spawnPlanta();
+			jardin.crearAbono();
+			jardin.dibujarPlantas();
+			jardin.dibujarRegalos();
 		}
 
 		// ...
