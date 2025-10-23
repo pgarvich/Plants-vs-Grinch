@@ -8,6 +8,8 @@ public class ZAlter {
 	private Reloj reloj;
 	
 	boolean vivo = false;
+	int posX;
+	int posY;
 	
 	public ZAlter(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;

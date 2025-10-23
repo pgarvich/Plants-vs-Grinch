@@ -44,6 +44,8 @@ public class Juego extends InterfaceJuego
 	 */
 	public void tick()
 	{
+		// Procesamiento de un instante de tiempo
+		
 		////////////////////////////GESTION DEL RELOJ///////////////////////////////////////
 		if(estado.esJuego() && estado.estadoAnterior == 1)
 			reloj.tiempoObjeto(true, false, false, false);
@@ -58,8 +60,10 @@ public class Juego extends InterfaceJuego
 		
 		if (estado.esJuego()) {
 			menu.dibujarMenu();
+			cripta.spawnZombies();
+			cripta.dibujarZombies();
 		}
-		// Procesamiento de un instante de tiempo
+
 		// ...
 		
 	}

@@ -8,6 +8,9 @@ public class ZBase {
 	private Reloj reloj;
 	
 	boolean vivo = false;
+	boolean detener = false;
+	int posX;
+	int posY;
 	
 	public ZBase(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
@@ -15,5 +18,11 @@ public class ZBase {
 		this.reloj = reloj;
 
 }
+	public void desplazar() {
+		if(!detener) {
+			posX -= 1;
+		}
+		
+	}
 	}
 

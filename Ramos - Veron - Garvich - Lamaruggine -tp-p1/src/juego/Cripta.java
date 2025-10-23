@@ -13,6 +13,7 @@ public class Cripta {
 	int conteoBase;
 	int conteoAlter;
 	int zombiesMuertos = 0;
+	int zombiesVivos = 0;
 
 	public Cripta(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
@@ -28,7 +29,7 @@ public class Cripta {
 		this.zAlter = new ZAlter[10];
 		
 			for(int i = 0; i < zAlter.length; i++) {
-				zBase[i] = new ZBase(this.entorno, this.estado, this.reloj);				
+				zAlter[i] = new ZAlter(this.entorno, this.estado, this.reloj);				
 			}
 	}
 	
@@ -38,22 +39,66 @@ public class Cripta {
 		}
 	}
 	
-	public void cadaZombie() {
-
-		if(conteoBase >= zBase.length && conteoAlter >= zAlter.length) {
-			return; //no crear mas zombies, array lleno
+	public void dibujarZombies() {
+		if(estado.getEstado()==2) {
+			 for(int i = 0; i < zBase.length; i++) {		//dibujar zombies base
+		            if (zBase[i] == null) 
+		                continue;
+			 if(zBase[i].vivo) {
+				 zBase[i].desplazar();
+                 if (reloj.ciclos(200, 400)) {
+                     entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase1.png"), zBase[i].posX, zBase[i].posY, 0);
+                 } else {
+                     entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase2.png"), zBase[i].posX, zBase[i].posY, 0);
+                 }			 
+			 }
+			 }
 		}
-		
-		int num = (int)(Math.random() * 50) + 1;		//Qué tipo de zombie
-		int cara = (int) (Math.random() * 5) + 1;		//Ver en qué línea cae
-		
-		if (num >= 40 && conteoAlter < zAlter.length) {
-			zAlter[conteoAlter].vivo = true;
-			
-			
-		}
-		
 	}
+	
+	public void spawnZombies() {
+	    if((conteoBase >= zBase.length && conteoAlter >= zAlter.length) || zombiesVivos >= 15) {
+	        return;
+	    }
+	    contarTicks(false);
+	    if(cuantosTicks > 100) {
+	    
+	    int linea = (int) (Math.random() * 5) + 1;
+	    int posI;
+	    if(linea == 1)
+	        posI = 220;
+	    else if(linea == 2)  // Agregar else if
+	        posI = 350;
+	    else if(linea == 3)
+	        posI = 480;
+	    else if(linea == 4)
+	        posI = 610;
+	    else
+	        posI = 740;
+	    
+	    int num = (int)(Math.random() * 50) + 1;
+
+	    if (num >= 40 && conteoAlter < zAlter.length) {
+	        // Zombie Alter
+	        zAlter[conteoAlter].vivo = true;
+	        zAlter[conteoAlter].posX = 1500;
+	        zAlter[conteoAlter].posY = posI;
+	        conteoAlter += 1;
+	        zombiesVivos += 1;
+	    } 
+	    else if (conteoBase < zBase.length) {
+	        // Zombie Base
+	        zBase[conteoBase].vivo = true;
+	        zBase[conteoBase].posX = 1500;
+	        zBase[conteoBase].posY = posI;
+	        conteoBase += 1;  
+	        zombiesVivos += 1;
+	        contarTicks(true);
+	    }
+	    
+
+	}
+	}	
 	
 	public void contarTicks(boolean iniciar) {
 		if(entorno == null) {
