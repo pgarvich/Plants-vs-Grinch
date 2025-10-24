@@ -26,6 +26,7 @@ public class Reloj {
 		int resto = getTiempo() % divisor;
 		return (resto < indice);
 	}
+	
 	public void tiempoObjeto(boolean iniciar, boolean parar, boolean continuar, boolean correr) {
 		if(iniciar)
 			fueraDeJuego = entorno.tiempo();
@@ -43,8 +44,8 @@ public class Reloj {
 		int segundos = (enJuego / 1000) % 60;
 		int minutos = enJuego / 60000;
 		int decimas = enJuego % 100;
-		String texto = "" + minutos + ":" + segundos + "." + decimas;
-		entorno.cambiarFont("Arial", tamanio, Color.BLACK);
+		String texto = "" + minutos + ":" + segundos + "," + decimas;
+		entorno.cambiarFont("Arial", tamanio, Color.CYAN);
 		entorno.escribirTexto(texto, posX, posY);
 	}
 	public int getTiempo() {
