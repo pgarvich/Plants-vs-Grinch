@@ -141,9 +141,11 @@ public class Jardin {
 	    	if(r.vivo) {
 	    		if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
 	    			BolaDeFuego bola = rosa[i].disparar();
+	    			if (conteoBFuego >= bFuego.length * 0.9) aumentarLengthBFuego();
 	    			for(int a = 0; a < bFuego.length; a++) {
 	    				if (bFuego[a] == null) {
 	    					bFuego[a] = bola;
+	    					conteoBFuego ++;
 	    					break;
 	    				}
 	    			}
@@ -168,8 +170,12 @@ public class Jardin {
 			if (cripta.hayZombieEnPosicion(b.posX, b.posY)) {
 				cripta.herirZombieEnPosicion(b.posX, b.posY, b.damage);
 				bFuego[i] = null;
+				conteoBFuego --;
 			}
-			if (b.posX > 1400) bFuego[i] = null;
+			if (b.posX > 1400) {
+				bFuego[i] = null;
+				conteoBFuego --;
+			}
 		}
 		
 		// También se deberían dibujar las bolas de nieve en este método
@@ -284,5 +290,14 @@ public class Jardin {
 		else{
 			cuantosTicks = entorno.numeroDeTick() - ticksFuera;
 		}
+	}
+	
+	private void aumentarLengthBFuego() {
+		int length = (int) (bFuego.length * 1.5);
+		BolaDeFuego[] nuevo = new BolaDeFuego[length];
+		for (int i = 0; i < bFuego.length; i++) {
+			nuevo[i] = bFuego[i];
+		}
+		bFuego = nuevo;
 	}
 }
