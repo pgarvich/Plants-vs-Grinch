@@ -10,6 +10,7 @@ public class ZAlter {
 	boolean vivo = false;
 	int posX;
 	int posY;
+	int vida = 100;
 	
 	public ZAlter(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;

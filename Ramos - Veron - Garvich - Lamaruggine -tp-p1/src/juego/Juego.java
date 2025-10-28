@@ -27,7 +27,7 @@ public class Juego extends InterfaceJuego
 		this.reloj = new Reloj(this.entorno, this.estado, 0);
 		this.menu = new Menu(this.entorno, this.estado, this.reloj);
 		this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
-		this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu);
+		this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu, this.cripta);
 		
 		estado.setEstado(2);
 
@@ -43,8 +43,7 @@ public class Juego extends InterfaceJuego
 	 * actualizar el estado interno del juego para simular el paso del tiempo 
 	 * (ver el enunciado del TP para mayor detalle).
 	 */
-	public void tick()
-	{
+	public void tick(){
 		// Procesamiento de un instante de tiempo
 		
 		////////////////////////////GESTION DEL RELOJ///////////////////////////////////////
@@ -67,6 +66,7 @@ public class Juego extends InterfaceJuego
 			jardin.crearAbono();
 			jardin.dibujarPlantas();
 			jardin.dibujarRegalos();
+			jardin.dibujarProyectiles();
 		}
 
 		// ...

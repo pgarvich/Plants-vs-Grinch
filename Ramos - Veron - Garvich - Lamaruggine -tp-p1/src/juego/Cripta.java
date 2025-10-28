@@ -113,4 +113,70 @@ public class Cripta {
 		}
 	}
 	
+	public boolean hayZombieEnPosicion(int x, int y) {
+	    for (int i = 0; i < zBase.length; i++) {
+	        if (zBase[i] != null && zBase[i].vivo) {
+	            if (Math.abs(zBase[i].posX - x) < 30 && Math.abs(zBase[i].posY - y) < 30) {
+	                return true;
+	            }
+	        }
+	    }
+	    for (int i = 0; i < zAlter.length; i++) {
+	        if (zAlter[i] != null && zAlter[i].vivo) {
+	            if (Math.abs(zAlter[i].posX - x) < 30 && Math.abs(zAlter[i].posY - y) < 30) {
+	                return true;
+	            }
+	        }
+	    }
+	    return false;
+	}
+
+	public void herirZombieEnPosicion(int x, int y, int damage) {
+	    for (int i = 0; i < zBase.length; i++) {
+	        if (zBase[i] != null && zBase[i].vivo) {
+	            if (Math.abs(zBase[i].posX - x) < 30 && Math.abs(zBase[i].posY - y) < 30) {
+	                zBase[i].vida -= damage;
+	                if (zBase[i].vida <= 0) {
+	                    zBase[i].vivo = false;
+	                    zombiesMuertos++;
+	                    zombiesVivos--;
+	                }
+	                return;
+	            }
+	        }
+	    }
+	    for (int i = 0; i < zAlter.length; i++) {
+	        if (zAlter[i] != null && zAlter[i].vivo) {
+	            if (Math.abs(zAlter[i].posX - x) < 30 && Math.abs(zAlter[i].posY - y) < 30) {
+	                zAlter[i].vida -= damage;
+	                if (zAlter[i].vida <= 0) {
+	                    zAlter[i].vivo = false;
+	                    zombiesMuertos++;
+	                    zombiesVivos--;
+	                }
+	                return;
+	            }
+	        }
+	    }
+	}
+
+	public boolean hayZombieEnFila(int posX, int posY) {
+	    for (int i = 0; i < zBase.length; i++) {
+	        if (zBase[i] != null && zBase[i].vivo 
+	            && Math.abs(zBase[i].posY - posY) < 30
+	            && zBase[i].posX > posX) {
+	            return true;
+	        }
+	    }
+	    for (int i = 0; i < zAlter.length; i++) {
+	        if (zAlter[i] != null && zAlter[i].vivo
+	            && Math.abs(zAlter[i].posY - posY) < 30
+	            && zAlter[i].posX > posX) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
+	
 }

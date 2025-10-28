@@ -10,27 +10,32 @@ public class Jardin {
 	private Estado estado;
 	private Reloj reloj;
 	private Rosa[] rosa;
+	private BolaDeFuego[] bFuego;
 	private Menu menu;
+	private Cripta cripta;
 	
 	int abono = 100;
 	boolean aRosa = false;
 	int conteoRosa = 0;
+	int conteoBFuego = 0;
 	int ticksFuera;
 	int cuantosTicks;
 	
 	
-	public Jardin(Entorno entorno, Estado estado, Reloj reloj, Menu menu) {
+	public Jardin(Entorno entorno, Estado estado, Reloj reloj, Menu menu, Cripta cripta) {
 		this.entorno = entorno;
 		this.estado = estado;
 		this.reloj = reloj;
 		this.menu = menu;
+		this.cripta = cripta;
 		
 		this.rosa = new Rosa[50];
+		this.bFuego = new BolaDeFuego[100];
 		
-			for(int i = 0; i < rosa.length; i++) {
-				rosa[i] = new Rosa(this.entorno, this.estado, this.reloj);
-			}
+		for(int i = 0; i < rosa.length; i++) {
+			rosa[i] = new Rosa(this.entorno, this.estado, this.reloj);
 		}
+	}
 	
 	public void dibujarRegalos() {
 		if (reloj.ciclos(200, 1200)) {			//1er regalo
@@ -130,18 +135,44 @@ public class Jardin {
 	}
 	
 	public void dibujarPlantas() {
-		 for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
-	            if (rosa[i] == null) 
-	                continue;
-	            if(rosa[i].vivo) {
-	            	if (reloj.ciclos(200, 400)) {
-	            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
-          }
-	            	else {
-	            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
-          }			 
-		 }
-	 }
+		for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
+			Rosa r = rosa[i]
+;	    	if (r == null) continue;
+	    	if(r.vivo) {
+	    		if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
+	    			BolaDeFuego bola = rosa[i].disparar();
+	    			for(int a = 0; a < bFuego.length; a++) {
+	    				if (bFuego[a] == null) {
+	    					bFuego[a] = bola;
+	    					break;
+	    				}
+	    			}
+	    		}
+	    		if (reloj.ciclos(200, 400)) {
+	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
+	    		}
+	    		else {
+	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
+	    		}			 
+	    	}
+		}
+	}
+
+	public void dibujarProyectiles() {
+		// Dibuja las bolas de fuego
+		for(int i = 0; i < bFuego.length; i++) {
+			BolaDeFuego b = bFuego[i];
+			if (b == null) continue;
+			b.desplazar();
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeFuego.png"), b.posX, b.posY, 0);
+			if (cripta.hayZombieEnPosicion(b.posX, b.posY)) {
+				cripta.herirZombieEnPosicion(b.posX, b.posY, b.damage);
+				bFuego[i] = null;
+			}
+			if (b.posX > 1400) bFuego[i] = null;
+		}
+		
+		// También se deberían dibujar las bolas de nieve en este método
 	}
 	
 	public void spawnPlanta() {
@@ -231,6 +262,7 @@ public class Jardin {
 		}
 		
 	}
+	
 	
 	public void crearAbono() {
 		entorno.cambiarFont("Arial", 18, Color.CYAN);

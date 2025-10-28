@@ -1,28 +1,28 @@
 package juego;
 import entorno.Entorno;
-import entorno.Herramientas;
 
-public class ZBase {
+public class BolaDeFuego {
 	private Entorno entorno;
 	private Estado estado;
 	private Reloj reloj;
+	private Rosa rosa;
 	
-	boolean vivo = false;
-	boolean detener = false;
 	int posX;
 	int posY;
-	int vida = 100;
-			
-	public ZBase(Entorno entorno, Estado estado, Reloj reloj) {
+	int damage = 20;
+	
+	public BolaDeFuego(Entorno entorno, Estado estado, Reloj reloj, Rosa rosa) {
+		super();
 		this.entorno = entorno;
 		this.estado = estado;
 		this.reloj = reloj;
-
+		this.rosa = rosa;
+		posX = rosa.posX;
+		posY = rosa.posY;
 	}
+	
 	public void desplazar() {
-		if(!detener) {
-			posX -= 1;
-		}
+			posX += 5;
 	}
+	
 }
-
