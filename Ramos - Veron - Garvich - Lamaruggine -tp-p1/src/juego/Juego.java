@@ -20,6 +20,7 @@ public class Juego extends InterfaceJuego
 	Juego()
 	{
 		// Inicializa el objeto entorno
+		
 		this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 1400, 800);
 		
 		// Inicializar lo que haga falta para el juego
@@ -63,7 +64,12 @@ public class Juego extends InterfaceJuego
 			cripta.dibujarZombies();
 			jardin.spawnPlanta();
 			jardin.crearAbono();
+
 			jardin.dibujarProyectiles();
+			cripta.mostrarZombiesVivos(18, 755, 135); 
+			cripta.mostrarZombiesEliminados(18, 762, 160); 
+			
+			
 		}
 		jardin.dibujarRegalos();
 		if(estado.esDerrota()) {

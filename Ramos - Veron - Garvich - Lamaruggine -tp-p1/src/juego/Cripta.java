@@ -1,4 +1,6 @@
 package juego;
+import java.awt.Color;
+
 import entorno.Entorno;
 import entorno.Herramientas;
 
@@ -13,6 +15,7 @@ public class Cripta {
 	int conteoBase;
 	int conteoAlter;
 	int zombiesMuertos = 0;
+
 	int zombiesVivos = 0;
 	boolean regalo1 = true;
 	boolean regalo2 = true;
@@ -37,7 +40,7 @@ public class Cripta {
 				zAlter[i] = new ZAlter(this.entorno, this.estado, this.reloj);				
 			}
 	}
-	
+		
 	public void rendirZombies() {
 		if(zombiesMuertos == 70) {
 			estado.setEstado(5);
@@ -216,6 +219,16 @@ public class Cripta {
 	    }
 	    return false;
 	}
-
 	
+	public void mostrarZombiesVivos(int tamanio, int posX, int posY) {
+		String vivos = String.valueOf(zBase.length - zombiesMuertos);
+		entorno.cambiarFont("Comic Sans MS", tamanio, Color.yellow);
+		entorno.escribirTexto(vivos, posX, posY);
+	}
+
+	public void mostrarZombiesEliminados(int tamanio, int posX, int posY) {
+		String eliminados = String.valueOf(zombiesMuertos); 
+		entorno.cambiarFont("Comic Sans MS", tamanio, Color.yellow);
+		entorno.escribirTexto(eliminados, posX, posY);
+	}
 }

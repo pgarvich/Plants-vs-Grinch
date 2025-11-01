@@ -18,9 +18,8 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 	public Menu(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
 		this.estado = estado;
-		this.reloj = reloj;
+		this.reloj = reloj; 
 	}
-
 
 	public boolean sobre(int masX, int menosX, int masY, int menosY) {
 		int mX = entorno.mouseX();
@@ -32,6 +31,7 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			return false;
 	}
 	}
+
 	public void dibujarMenu() {
 		if(estado.esInicio()) {
 			if(!sobre(680, 910, 610, 710)) {
@@ -72,6 +72,7 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			}
 		if(estado.esJuego()) {
 
+
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
 			if(!sobre(1038, 1263, 38, 122)) {
 				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Pausa.png"), 1150, 80, 0);
@@ -81,8 +82,13 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 				if(entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO))
 					estado.setEstado(3);
 			}
+
+			//reloj.mostrarTiempo(50, 650, 50);
+			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
+			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/MenuSuperior9.png"), 700, 90, 0, 1);
+
 			if(!aRose)
-				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/botonRosa.png"), 102, 82, 0);
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/botonRosa.png"), 102, 82, 0, 1.2);
 			
 			else
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/botonRosa2.png"), 102, 82, 0);
