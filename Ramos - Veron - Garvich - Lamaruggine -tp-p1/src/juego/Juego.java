@@ -63,6 +63,7 @@ public class Juego extends InterfaceJuego
 			cripta.spawnZombies();
 			cripta.dibujarZombies();
 			jardin.spawnPlanta();
+			jardin.moverPlanta();
 			jardin.crearAbono();
 			jardin.dibujarPlantas();
 			jardin.dibujarRegalos();

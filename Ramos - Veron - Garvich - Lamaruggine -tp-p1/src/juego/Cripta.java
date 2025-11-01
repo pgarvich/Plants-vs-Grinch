@@ -137,7 +137,8 @@ public class Cripta {
 	            if (Math.abs(zBase[i].posX - x) < 30 && Math.abs(zBase[i].posY - y) < 30) {
 	                zBase[i].vida -= damage;
 	                if (zBase[i].vida <= 0) {
-	                    zBase[i].vivo = false;
+	                	zBase[i].vivo = false;
+	                    zBase[i] = null;
 	                    zombiesMuertos++;
 	                    zombiesVivos--;
 	                }
@@ -150,7 +151,7 @@ public class Cripta {
 	            if (Math.abs(zAlter[i].posX - x) < 30 && Math.abs(zAlter[i].posY - y) < 30) {
 	                zAlter[i].vida -= damage;
 	                if (zAlter[i].vida <= 0) {
-	                    zAlter[i].vivo = false;
+	                    zAlter[i] = null;
 	                    zombiesMuertos++;
 	                    zombiesVivos--;
 	                }
