@@ -8,10 +8,11 @@ public class ZBase {
 	private Reloj reloj;
 	
 	boolean vivo = false;
-	boolean detener = false;
+	boolean derecha = false;
 	int posX;
 	int posY;
-	int vida = 100;
+	int vida = 80;
+	boolean zombieVictorioso = false;
 			
 	public ZBase(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
@@ -20,8 +21,15 @@ public class ZBase {
 
 	}
 	public void desplazar() {
-		if(!detener) {
+		if(!derecha)
 			posX -= 1;
+		else
+			posX +=1;
+	}
+	public void victoriaZombie() {
+		if(posX <= 100) {
+			estado.setEstado(4);
+			zombieVictorioso = true;
 		}
 	}
 }

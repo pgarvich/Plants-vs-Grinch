@@ -20,6 +20,7 @@ public class Jardin {
 	int conteoBFuego = 0;
 	int ticksFuera;
 	int cuantosTicks;
+	int regaloPerdido;
 	
 	
 	public Jardin(Entorno entorno, Estado estado, Reloj reloj, Menu menu, Cripta cripta) {
@@ -38,9 +39,23 @@ public class Jardin {
 	}
 	
 	public void dibujarRegalos() {
+		if(estado.esDerrota()) {
+			if(cripta.regalo1)
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 226, 0);
+			if(cripta.regalo2)
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 353, 0);
+			if(cripta.regalo3)
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 482, 0);
+			if(cripta.regalo4)
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 612, 0);
+			if(cripta.regalo5)
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 736, 0);
+		}
+		
+		if(estado.esJuego()) {
 		if (reloj.ciclos(200, 1200)) {			//1er regalo
     		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 226, 0);
-}
+		}
 		else if (reloj.ciclos(400,  1200)) {
     		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 220, 0);
 		}
@@ -132,12 +147,28 @@ public class Jardin {
 		else {
 		    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 706, 0);
 		}
+		}
 	}
 	
 	public void dibujarPlantas() {
+		if(estado.esDerrota()) {
+			for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
+				Rosa r = rosa[i];
+				if (r == null) continue;
+		    	if(r.vivo) {
+		    		if (reloj.ciclos(300, 600)) {
+		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD1.png"), rosa[i].posX, rosa[i].posY, 0);
+		    		}
+		    		else {
+		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD2.png"), rosa[i].posX, rosa[i].posY, 0);
+		    			}			 
+		    		}
+				}
+		}
+		if(estado.esJuego()) {
 		for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
-			Rosa r = rosa[i]
-;	    	if (r == null) continue;
+			Rosa r = rosa[i];
+			if (r == null) continue;
 	    	if(r.vivo) {
 	    		if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
 	    			BolaDeFuego bola = rosa[i].disparar();
@@ -155,11 +186,11 @@ public class Jardin {
 	    		}
 	    		else {
 	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
-	    		}			 
-	    	}
+	    			}			 
+	    		}
+			}
 		}
 	}
-
 	public void dibujarProyectiles() {
 		// Dibuja las bolas de fuego
 		for(int i = 0; i < bFuego.length; i++) {

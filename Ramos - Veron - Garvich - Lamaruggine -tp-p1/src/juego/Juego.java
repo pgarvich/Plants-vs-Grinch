@@ -29,7 +29,6 @@ public class Juego extends InterfaceJuego
 		this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
 		this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu, this.cripta);
 		
-		estado.setEstado(2);
 
 		
 
@@ -45,6 +44,7 @@ public class Juego extends InterfaceJuego
 	 */
 	public void tick(){
 		// Procesamiento de un instante de tiempo
+		menu.dibujarMenu();
 		
 		////////////////////////////GESTION DEL RELOJ///////////////////////////////////////
 		if(estado.esJuego() && estado.estadoAnterior == 1)
@@ -53,20 +53,22 @@ public class Juego extends InterfaceJuego
 			reloj.tiempoObjeto(false, true, false, false);
 		if(estado.esJuego() && estado.estadoAnterior == 3)
 			reloj.tiempoObjeto(false, false, true, false);
-		if(estado.esJuego())
+		if(estado.esJuego() || estado.esDerrota())
 			reloj.tiempoObjeto(false, false, false, true);
 		estado.estadoAnterior = estado.getEstado();	
 		////////////////////////////////////////////////////////////////////////////////////
-		
+		jardin.dibujarPlantas();
 		if (estado.esJuego()) {
-			menu.dibujarMenu();
 			cripta.spawnZombies();
 			cripta.dibujarZombies();
 			jardin.spawnPlanta();
 			jardin.crearAbono();
-			jardin.dibujarPlantas();
-			jardin.dibujarRegalos();
 			jardin.dibujarProyectiles();
+		}
+		jardin.dibujarRegalos();
+		if(estado.esDerrota()) {
+			cripta.zombiesVictoriosos();
+			
 		}
 
 		// ...
