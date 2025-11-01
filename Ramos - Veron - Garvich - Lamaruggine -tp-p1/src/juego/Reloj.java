@@ -1,5 +1,6 @@
 package juego;
 import java.awt.Color;
+import java.awt.Font;
 
 import entorno.Entorno;
 
@@ -43,9 +44,9 @@ public class Reloj {
 	public void mostrarTiempo(int tamanio, int posX, int posY){
 		int segundos = (enJuego / 1000) % 60;
 		int minutos = enJuego / 60000;
-		int decimas = enJuego % 100;
-		String texto = "" + minutos + ":" + segundos + "," + decimas;
-		entorno.cambiarFont("Arial", tamanio, Color.CYAN);
+		//int decimas = enJuego % 100;
+		String texto = String.format("%02d:%02d", minutos, segundos);
+		entorno.cambiarFont("Comic Sans MS", tamanio, Color.yellow);
 		entorno.escribirTexto(texto, posX, posY);
 	}
 	public int getTiempo() {
