@@ -272,7 +272,7 @@ public class Jardin {
 	
 	public void crearAbono() {
 		entorno.cambiarFont("Arial", 18, Color.CYAN);
-		entorno.escribirTexto("Abono total: " + abono, 700, 100);
+		entorno.escribirTexto("Abono total: " + abono, 1200, 100);
 		contarTicks(false);
 		if(abono < 300 && cuantosTicks > 100) {
 			abono += 15;
