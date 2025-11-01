@@ -21,7 +21,7 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 		if(estado.esJuego()) {
 			//reloj.mostrarTiempo(50, 650, 50);
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
-			entorno.dibujarImagen(Herramientas.cargarImagen("menuSuperior/MenuSuperior9.png"), 700, 90, 0, 1);
+			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/MenuSuperior9.png"), 700, 90, 0, 1);
 			if(!aRose)
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/botonRosa.png"), 102, 82, 0, 1.2);
 			
