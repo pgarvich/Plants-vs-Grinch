@@ -93,7 +93,6 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			else
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/botonRosa2.png"), 102, 82, 0);
 			
-			reloj.mostrarTiempo(50, 650, 50);
 		}
 	}
 	public void contarTicks(boolean iniciar) {

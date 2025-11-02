@@ -67,8 +67,8 @@ public class Juego extends InterfaceJuego
 
 			jardin.dibujarProyectiles();
 			cripta.mostrarZombiesVivos(18, 755, 135); 
-			cripta.mostrarZombiesEliminados(18, 762, 160); 
-			
+			cripta.mostrarZombiesEliminados(18, 762, 160);
+			reloj.mostrarTiempo(18, 730, 94);
 			
 		}
 		jardin.dibujarRegalos();
