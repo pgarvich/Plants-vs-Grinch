@@ -11,7 +11,7 @@ public class ZBase {
 	boolean derecha = false;
 	int posX;
 	int posY;
-	int vida = 80;
+	int vida = 100;
 	boolean zombieVictorioso = false;
 			
 	public ZBase(Entorno entorno, Estado estado, Reloj reloj) {
@@ -22,9 +22,9 @@ public class ZBase {
 	}
 	public void desplazar() {
 		if(!derecha)
-			posX -= 1;
+			posX -= 0.8;
 		else
-			posX +=1;
+			posX += 1;
 	}
 	public void victoriaZombie() {
 		if(posX <= 100) {

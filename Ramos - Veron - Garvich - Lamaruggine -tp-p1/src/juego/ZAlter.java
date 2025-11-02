@@ -10,7 +10,9 @@ public class ZAlter {
 	boolean vivo = false;
 	int posX;
 	int posY;
-	int vida = 100;
+	int vida = 40;
+	boolean derecha = false;
+	boolean zombieVictorioso = false;
 	
 	public ZAlter(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
@@ -18,5 +20,16 @@ public class ZAlter {
 		this.reloj = reloj;
 
 }
-
+	public void desplazar() {
+		if(!derecha)
+			posX -= 1.5;
+		else
+			posX +=1;
+	}
+	public void victoriaZombie() {
+		if(posX <= 100) {
+			estado.setEstado(4);
+			zombieVictorioso = true;
+		}
+	}
 }

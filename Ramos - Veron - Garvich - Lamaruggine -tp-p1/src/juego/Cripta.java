@@ -80,6 +80,38 @@ public class Cripta {
 	            }
 	        }
 	    } 
+	    for(int i = 0; i < zAlter.length; i++) {        //dibujar zombies base
+	        if (zAlter[i] == null) 
+	            continue;
+	        if(zAlter[i].vivo) {
+	            zAlter[i].derecha = true;
+	            zAlter[i].desplazar();
+	            if(!zAlter[i].zombieVictorioso) {
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter3.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter4.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                }
+	            }
+	            else {
+	                if (reloj.ciclos(200, 400))
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlterV1.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                else
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlterV2.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                if(zAlter[i].posY == 220)
+	                    regalo1 = false;
+	                else if(zAlter[i].posY == 350)
+	                    regalo2 = false;
+	                else if(zAlter[i].posY == 480)
+	                    regalo3 = false;
+	                else if(zAlter[i].posY == 610)
+	                    regalo4 = false;
+	                else
+	                    regalo5 = false;
+	            }
+	        }
+	    } 
 	} 
 	public void dibujarZombies() {
 			 for(int i = 0; i < zBase.length; i++) {		//dibujar zombies base
@@ -94,6 +126,20 @@ public class Cripta {
 		            	else {
 		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase2.png"), zBase[i].posX, zBase[i].posY, 0);
                  }			 
+			 }
+		 }
+			 for(int i = 0; i < zAlter.length; i++) {		//dibujar zombies base
+		            if (zAlter[i] == null) 
+		                continue;
+		            if(zAlter[i].vivo) {
+		            	zAlter[i].desplazar();
+		            	zAlter[i].victoriaZombie();
+		            	if (reloj.ciclos(200, 400)) {
+		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter1.png"), zAlter[i].posX, zAlter[i].posY, 0);
+              }
+		            	else {
+		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter2.png"), zAlter[i].posX, zAlter[i].posY, 0);
+              }			 
 			 }
 		 }
 		
@@ -119,7 +165,7 @@ public class Cripta {
 	    else
 	        posI = 740;
 	    
-	    int num = (int)(Math.random() * 50) + 1;
+	    int num = (int)(Math.random() * 60) + 1;
 
 	    if (num >= 40 && conteoAlter < zAlter.length) {
 	        // Zombie Alter
@@ -128,6 +174,7 @@ public class Cripta {
 	        zAlter[conteoAlter].posY = posI;
 	        conteoAlter += 1;
 	        zombiesVivos += 1;
+	        contarTicks(true);
 	    } 
 	    else if (conteoBase < zBase.length) {
 	        // Zombie Base
