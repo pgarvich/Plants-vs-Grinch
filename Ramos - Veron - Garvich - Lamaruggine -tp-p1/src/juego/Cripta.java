@@ -48,39 +48,39 @@ public class Cripta {
 	}
 	
 	public void zombiesVictoriosos() {
-		 for(int i = 0; i < zBase.length; i++) {		//dibujar zombies base
-	            if (zBase[i] == null) 
-	                continue;
-	            if(zBase[i].vivo) {
-	            	zBase[i].derecha = true;
-	            	zBase[i].desplazar();
-	            	if(!zBase[i].zombieVictorioso) {
-	            	if (reloj.ciclos(200, 400)) {
-	            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase3.png"), zBase[i].posX, zBase[i].posY, 0);
-	            		}
-	            	else {
-	            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase4.png"), zBase[i].posX, zBase[i].posY, 0);
-	            		}
-	            	}
-	            	else {
-	            		if (reloj.ciclos(200, 400))
-	            			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBaseV1.png"), zBase[i].posX, zBase[i].posY, 0);
-	            		else
-	            			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBaseV2.png"), zBase[i].posX, zBase[i].posY, 0);
-	            		if(zBase[i].posY == 220)
-	            			regalo1 = false;
-	            		else if(zBase[i].posY == 350)
-	            			regalo2 = false;
-	            		else if(zBase[i].posY == 480)
-	            			regalo3 = false;
-	            		else if(zBase[i].posY == 610)
-	            			regalo4 = false;
-	            		else
-	            			regalo5 = false;
+	    for(int i = 0; i < zBase.length; i++) {        //dibujar zombies base
+	        if (zBase[i] == null) 
+	            continue;
+	        if(zBase[i].vivo) {
+	            zBase[i].derecha = true;
+	            zBase[i].desplazar();
+	            if(!zBase[i].zombieVictorioso) {
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase3.png"), zBase[i].posX, zBase[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase4.png"), zBase[i].posX, zBase[i].posY, 0);
+	                }
 	            }
-		 }
-		 }
-	}
+	            else {
+	                if (reloj.ciclos(200, 400))
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBaseV1.png"), zBase[i].posX, zBase[i].posY, 0);
+	                else
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBaseV2.png"), zBase[i].posX, zBase[i].posY, 0);
+	                if(zBase[i].posY == 220)
+	                    regalo1 = false;
+	                else if(zBase[i].posY == 350)
+	                    regalo2 = false;
+	                else if(zBase[i].posY == 480)
+	                    regalo3 = false;
+	                else if(zBase[i].posY == 610)
+	                    regalo4 = false;
+	                else
+	                    regalo5 = false;
+	            }
+	        }
+	    } 
+	} 
 	public void dibujarZombies() {
 			 for(int i = 0; i < zBase.length; i++) {		//dibujar zombies base
 		            if (zBase[i] == null) 
