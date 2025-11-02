@@ -14,6 +14,7 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 	boolean cortar = false;
 	
 	boolean aRose = false;
+	boolean aNuez = false;
 	
 	public Menu(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
@@ -47,6 +48,8 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pastoDerrota.png"), 700, 400, 0);
 			
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD1.png"), 102, 82, 0);
+			
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD1.png"), 300, 82, 0);
 		}
 		if(estado.esPausa()) {
 			if(!sobre(700, 1369, 580, 760)) {
@@ -86,12 +89,17 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			//reloj.mostrarTiempo(50, 650, 50);
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/MenuSuperior9.png"), 700, 90, 0, 1);
+			
+			if(!aNuez)
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezBoton1.png"), 300, 82, 0);
+			else
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezBoton2.png"), 300, 82, 0);
 
 			if(!aRose)
-				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/botonRosa.png"), 102, 82, 0, 1.2);
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), 102, 82, 0);
 			
 			else
-				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/botonRosa2.png"), 102, 82, 0);
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), 102, 82, 0);
 			
 		}
 	}

@@ -10,13 +10,16 @@ public class Jardin {
 	private Estado estado;
 	private Reloj reloj;
 	private Rosa[] rosa;
+	private Nuez [] nuez;
 	private BolaDeFuego[] bFuego;
 	private Menu menu;
 	private Cripta cripta;
 	
 	int abono = 100;
 	boolean aRosa = false;
+	boolean aNuez = false;
 	int conteoRosa = 0;
+	int conteoNuez = 0;
 	int conteoBFuego = 0;
 	int ticksFuera;
 	int cuantosTicks;
@@ -30,8 +33,13 @@ public class Jardin {
 		this.menu = menu;
 		this.cripta = cripta;
 		
+		this.nuez = new Nuez[50];
 		this.rosa = new Rosa[50];
 		this.bFuego = new BolaDeFuego[100];
+		
+		for(int i = 0; i < nuez.length; i++) {
+			nuez[i] = new Nuez(this.entorno, this.estado, this.reloj);
+		}
 		
 		for(int i = 0; i < rosa.length; i++) {
 			rosa[i] = new Rosa(this.entorno, this.estado, this.reloj);
@@ -152,7 +160,19 @@ public class Jardin {
 	
 	public void dibujarPlantas() {
 		if(estado.esDerrota()) {
-			for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
+			for(int i = 0; i < nuez.length; i++) {		
+				if (nuez[i] == null) continue;
+		    	if(nuez[i].vivo) {
+		    		if (reloj.ciclos(300, 600)) {
+		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD1.png"), nuez[i].posX, nuez[i].posY, 0);
+		    		}
+		    		else {
+		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD2.png"), nuez[i].posX, nuez[i].posY, 0.1);
+		    			}			 
+		    		}
+				}
+			
+			for(int i = 0; i < rosa.length; i++) {		
 				Rosa r = rosa[i];
 				if (r == null) continue;
 		    	if(r.vivo) {
@@ -181,11 +201,24 @@ public class Jardin {
 	    				}
 	    			}
 	    		}
-	    		if (reloj.ciclos(200, 400)) {
+	    		if (reloj.ciclos(300, 600)) {
 	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
 	    		}
 	    		else {
 	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
+	    			}			 
+	    		}
+			}
+		for(int i = 0; i < nuez.length; i++) {		//dibujar zombies base
+
+			if (nuez[i] == null)
+				continue;
+	    	if(nuez[i].vivo) {
+	    		if (reloj.ciclos(200, 400)) {
+	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX, nuez[i].posY, 0);
+	    		}
+	    		else {
+	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX+5, nuez[i].posY-5, 0.1);
 	    			}			 
 	    		}
 			}
@@ -197,7 +230,7 @@ public class Jardin {
 			BolaDeFuego b = bFuego[i];
 			if (b == null) continue;
 			b.desplazar();
-			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeFuego.png"), b.posX, b.posY, 0);
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeFuego.png"), b.posX, b.posY-35, 0);
 			if (cripta.hayZombieEnPosicion(b.posX, b.posY)) {
 				cripta.herirZombieEnPosicion(b.posX, b.posY, b.damage);
 				bFuego[i] = null;
@@ -220,14 +253,26 @@ public class Jardin {
 		
 		if(40 < mX && mX < 165 && 20 < mY && mY < 145 && abono >= 60 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
 			aRosa = true;
+			aNuez = false;
+			menu.aNuez = false;
 			
 		}
 		
-		if(aRosa == true) {
+		if(250 < mX && mX < 350 && 20 < mY && mY < 145 && abono >= 40 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
+			aNuez = true;
+			aRosa = false;
+			menu.aRose = false;
+			
+		}
+		
+		if(aNuez) {
+			menu.aNuez = true;
+		}
+		
+		if(aRosa) {
 			menu.aRose = true;
 		}
 		
-		if(aRosa == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
 			if(120 < mX && mX < 240) {
 				posibleX = 180;
 			}
@@ -282,21 +327,35 @@ public class Jardin {
 			}
 			
 			for(int i = 0; i < rosa.length; i++){
-				if(rosa[i].posX == posibleX && rosa[i].posY == posibleY) {
+				if((rosa[i].posX == posibleX && rosa[i].posY == posibleY) || (nuez[i].posX == posibleX && nuez[i].posY == posibleY)) {
 					return;
 				}
 			}
+			
+			if(aRosa == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
 			rosa[conteoRosa].posX = posibleX;
 			rosa[conteoRosa].posY = posibleY;
 			rosa[conteoRosa].vivo = true;
 			conteoRosa += 1;
 			abono -= 60;
+
 			if(abono < 60) {
 				aRosa = false;
 				menu.aRose = false;
-			}
+			}}
 			
-		}
+			if(aNuez == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
+				nuez[conteoNuez].posX = posibleX;
+				nuez[conteoNuez].posY = posibleY;
+				nuez[conteoNuez].vivo = true;
+				conteoNuez += 1;
+				abono -= 40;
+
+				if(abono < 40) {
+					aNuez = false;
+					menu.aNuez = false;
+				}}
+			
 		
 	}
 	
