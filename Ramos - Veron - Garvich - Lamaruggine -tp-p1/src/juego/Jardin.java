@@ -14,6 +14,8 @@ public class Jardin {
 	private Menu menu;
 	private Cripta cripta;
 	
+	int[] xs = {180, 305, 435, 565, 693, 820, 948, 1073, 1198, 1325};
+	int[] ys = {229, 352, 480, 608, 735};
 	int abono = 100;
 	boolean aRosa = false;
 	int conteoRosa = 0;
@@ -21,6 +23,16 @@ public class Jardin {
 	int ticksFuera;
 	int cuantosTicks;
 	int regaloPerdido;
+	
+	int plantaSeleccionada = -1;
+	String tipoPlantaSeleccionada = "";
+	boolean moviendoPlanta = false;
+	
+	boolean izquierdaPres = false;
+	boolean derechaPres = false;
+	boolean arribaPres = false;
+	boolean abajoPres = false;
+
 	
 	
 	public Jardin(Entorno entorno, Estado estado, Reloj reloj, Menu menu, Cripta cripta) {
@@ -186,9 +198,18 @@ public class Jardin {
 	    		}
 	    		else {
 	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
+<<<<<<< HEAD
 	    			}			 
 	    		}
 			}
+=======
+	    		}			 
+	    	}
+	    	if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("rosa")) {
+	    		Color marco = new Color(255, 255, 0, 100);
+                entorno.dibujarRectangulo(r.posX, r.posY, 125, 125, 0, marco);
+            }
+>>>>>>> mover-plantas
 		}
 	}
 	public void dibujarProyectiles() {
@@ -197,6 +218,7 @@ public class Jardin {
 			BolaDeFuego b = bFuego[i];
 			if (b == null) continue;
 			b.desplazar();
+
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeFuego.png"), b.posX, b.posY, 0);
 			if (cripta.hayZombieEnPosicion(b.posX, b.posY)) {
 				cripta.herirZombieEnPosicion(b.posX, b.posY, b.damage);
@@ -300,6 +322,81 @@ public class Jardin {
 		
 	}
 	
+	public void moverPlanta() {
+    int mX = entorno.mouseX();
+    int mY = entorno.mouseY();
+
+    if (!moviendoPlanta) {
+        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
+            int posibleX = obtenerPosicionXDesdeMouse(mX);
+            int posibleY = obtenerPosicionYDesdeMouse(mY);
+            if (posibleX == -1 || posibleY == -1) return;
+
+            for (int i = 0; i < rosa.length; i++) {
+                if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == posibleX && rosa[i].posY == posibleY) {
+                    plantaSeleccionada = i;
+                    tipoPlantaSeleccionada = "rosa";
+                    moviendoPlanta = true;
+                    return;
+                }
+            }
+        }
+    } else {
+        int curX = getPosX();
+        int curY = getPosY();
+        int nuevoX = curX;
+        int nuevoY = curY;
+        char w = 119;
+        char W = 87;
+        char a = 97;
+        char A = 65;
+        char s = 115;
+        char S = 83;
+        char d = 100;
+        char D = 68;
+
+        if ((entorno.sePresiono(entorno.TECLA_IZQUIERDA) || entorno.sePresiono(a) || entorno.sePresiono(A)) && curX > xs[0] && !izquierdaPres) {
+            nuevoX = obtenerPosicionXMenor(curX);
+            izquierdaPres = true;
+        } else if (!(entorno.sePresiono(entorno.TECLA_IZQUIERDA) || entorno.sePresiono(a) || entorno.sePresiono(A))) {
+            izquierdaPres = false;
+        }
+
+        if ((entorno.sePresiono(entorno.TECLA_DERECHA) || entorno.sePresiono(d) || entorno.sePresiono(D)) && curX < xs[xs.length - 1] && !derechaPres) {
+            nuevoX = obtenerPosicionXMayor(curX);
+            derechaPres = true;
+        } else if (!(entorno.sePresiono(entorno.TECLA_DERECHA) || entorno.sePresiono(d) || entorno.sePresiono(D))) {
+            derechaPres = false;
+        }
+
+        if ((entorno.sePresiono(entorno.TECLA_ARRIBA) || entorno.sePresiono(w) || entorno.sePresiono(W)) && curY > ys[0] && !arribaPres) {
+            nuevoY = obtenerPosicionYMenor(curY);
+            arribaPres = true;
+        } else if (!(entorno.sePresiono(entorno.TECLA_ARRIBA) || entorno.sePresiono(w) || entorno.sePresiono(W))) {
+            arribaPres = false;
+        }
+
+        if ((entorno.sePresiono(entorno.TECLA_ABAJO) || entorno.sePresiono(s) || entorno.sePresiono(S)) && curY < ys[ys.length - 1] && !abajoPres) {
+            nuevoY = obtenerPosicionYMayor(curY);
+            abajoPres = true;
+        } else if (!(entorno.sePresiono(entorno.TECLA_ABAJO) || entorno.sePresiono(s) || entorno.sePresiono(S))) {
+            abajoPres = false;
+        }
+
+        if ((nuevoX != curX || nuevoY != curY) && !hayPlantaEnPosicion(nuevoX, nuevoY)) {
+            setPos(nuevoX, nuevoY);
+        }
+
+        // se confirma la nueva posición con click o enter
+        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) || entorno.sePresiono(entorno.TECLA_ENTER)) {
+            moviendoPlanta = false;
+            plantaSeleccionada = -1;
+            tipoPlantaSeleccionada = "";
+        }
+    }
+}
+
+	
 	
 	public void crearAbono() {
 		entorno.cambiarFont("Arial", 18, Color.CYAN);
@@ -331,4 +428,71 @@ public class Jardin {
 		}
 		bFuego = nuevo;
 	}
+	
+	private boolean hayPlantaEnPosicion(int x, int y) {
+	    for (int i = 0; i < rosa.length; i++) {
+	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) return true;
+	    }
+	    // faltan chequear los arrays de nuez y explosiva
+	    return false;
+	}
+
+	
+	private int obtenerPosicionXMenor(int x) {
+		for(int i = 0; i < xs.length; i++) {
+			if(i == 0 && xs[i] == x) return x;
+			if(xs[i] == x) return xs[i - 1];
+		}
+		return x;
+	}
+	private int obtenerPosicionYMenor(int y) {
+		for(int i = 0; i < ys.length; i++) {
+			if(i == 0 && ys[i] == y) return y;
+			if(ys[i] == y) return ys[i - 1];
+		}
+		return y;
+	}
+	private int obtenerPosicionXMayor(int x) {
+		for(int i = 0; i < xs.length; i++) {
+			if(i == xs.length - 1 && xs[i] == x) return x;
+			if(xs[i] == x) return xs[i + 1];
+		}
+		return x;
+	}	
+	private int obtenerPosicionYMayor(int y) {
+		for(int i = 0; i < ys.length; i++) {
+			if(i == ys.length - 1 && ys[i] == y) return y;
+			if(ys[i] == y) return ys[i + 1];
+		}
+		return y;
+	}
+	private int obtenerPosicionXDesdeMouse(int mouseX) {
+	    for (int i = 0; i < xs.length; i++) {
+	        if (Math.abs(mouseX - xs[i]) <= 60) return xs[i];
+	    }
+	    return -1;
+	}
+
+	private int obtenerPosicionYDesdeMouse(int mouseY) {
+	    for (int i = 0; i < ys.length; i++) {
+	        if (Math.abs(mouseY - ys[i]) <= 60) return ys[i];
+	    }
+	    return -1;
+	}
+
+	private int getPosX() {
+	    if ("rosa".equals(tipoPlantaSeleccionada)) return rosa[plantaSeleccionada].posX;
+	    return 0;
+	}
+	private int getPosY() {
+	    if ("rosa".equals(tipoPlantaSeleccionada)) return rosa[plantaSeleccionada].posY;
+	    return 0;
+	}
+	private void setPos(int x, int y) {
+	    if ("rosa".equals(tipoPlantaSeleccionada)) {
+	        rosa[plantaSeleccionada].posX = x;
+	        rosa[plantaSeleccionada].posY = y;
+	    }
+	}
+
 }

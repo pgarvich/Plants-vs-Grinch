@@ -22,7 +22,7 @@ public class BolaDeFuego {
 	}
 	
 	public void desplazar() {
-			posX += 5;
+			posX += 7;
 	}
 	
 }
