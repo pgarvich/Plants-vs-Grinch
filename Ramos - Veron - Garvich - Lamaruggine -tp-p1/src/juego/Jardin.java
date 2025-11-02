@@ -198,7 +198,7 @@ public class Jardin {
 	        }
 	    }
 
-	    // ESTA PARTE DEBE ESTAR FUERA del if(estado.esDerrota()) para dibujar durante el juego
+
 	    if(estado.esJuego()) {
 	        // Dibujar nueces durante el juego
 	        for(int i = 0; i < nuez.length; i++) {
@@ -209,7 +209,11 @@ public class Jardin {
 	                }
 	                else {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX+5, nuez[i].posY-5, 0.1);
-	                }             
+	                }
+	                if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("nuez")) {
+	                    Color marco = new Color(255, 255, 0, 100);
+	                    entorno.dibujarRectangulo(nuez[i].posX, nuez[i].posY, 125, 125, 0, marco);
+	                }
 	            }
 	        }
 
@@ -384,78 +388,89 @@ public class Jardin {
 	}
 	
 	public void moverPlanta() {
-    int mX = entorno.mouseX();
-    int mY = entorno.mouseY();
+	    int mX = entorno.mouseX();
+	    int mY = entorno.mouseY();
 
-    if (!moviendoPlanta) {
-        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
-            int posibleX = obtenerPosicionXDesdeMouse(mX);
-            int posibleY = obtenerPosicionYDesdeMouse(mY);
-            if (posibleX == -1 || posibleY == -1) return;
+	    if (!moviendoPlanta) {
+	        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
+	            int posibleX = obtenerPosicionXDesdeMouse(mX);
+	            int posibleY = obtenerPosicionYDesdeMouse(mY);
+	            if (posibleX == -1 || posibleY == -1) return;
 
-            for (int i = 0; i < rosa.length; i++) {
-                if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == posibleX && rosa[i].posY == posibleY) {
-                    plantaSeleccionada = i;
-                    tipoPlantaSeleccionada = "rosa";
-                    moviendoPlanta = true;
-                    return;
-                }
-            }
-        }
-    } else {
-        int curX = getPosX();
-        int curY = getPosY();
-        int nuevoX = curX;
-        int nuevoY = curY;
-        char w = 119;
-        char W = 87;
-        char a = 97;
-        char A = 65;
-        char s = 115;
-        char S = 83;
-        char d = 100;
-        char D = 68;
+	            // Primero verificar rosas
+	            for (int i = 0; i < rosa.length; i++) {
+	                if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == posibleX && rosa[i].posY == posibleY) {
+	                    plantaSeleccionada = i;
+	                    tipoPlantaSeleccionada = "rosa";
+	                    moviendoPlanta = true;
+	                    return;
+	                }
+	            }
+	            
+	            // Luego verificar nueces
+	            for (int i = 0; i < nuez.length; i++) {
+	                if (nuez[i] != null && nuez[i].vivo && nuez[i].posX == posibleX && nuez[i].posY == posibleY) {
+	                    plantaSeleccionada = i;
+	                    tipoPlantaSeleccionada = "nuez";
+	                    moviendoPlanta = true;
+	                    return;
+	                }
+	            }
+	        }
+	    } else {
+	        int curX = getPosX();
+	        int curY = getPosY();
+	        int nuevoX = curX;
+	        int nuevoY = curY;
+	        char w = 119;
+	        char W = 87;
+	        char a = 97;
+	        char A = 65;
+	        char s = 115;
+	        char S = 83;
+	        char d = 100;
+	        char D = 68;
 
-        if ((entorno.sePresiono(entorno.TECLA_IZQUIERDA) || entorno.sePresiono(a) || entorno.sePresiono(A)) && curX > xs[0] && !izquierdaPres) {
-            nuevoX = obtenerPosicionXMenor(curX);
-            izquierdaPres = true;
-        } else if (!(entorno.sePresiono(entorno.TECLA_IZQUIERDA) || entorno.sePresiono(a) || entorno.sePresiono(A))) {
-            izquierdaPres = false;
-        }
+	        if ((entorno.sePresiono(entorno.TECLA_IZQUIERDA) || entorno.sePresiono(a) || entorno.sePresiono(A)) && curX > xs[0] && !izquierdaPres) {
+	            nuevoX = obtenerPosicionXMenor(curX);
+	            izquierdaPres = true;
+	        } else if (!(entorno.sePresiono(entorno.TECLA_IZQUIERDA) || entorno.sePresiono(a) || entorno.sePresiono(A))) {
+	            izquierdaPres = false;
+	        }
 
-        if ((entorno.sePresiono(entorno.TECLA_DERECHA) || entorno.sePresiono(d) || entorno.sePresiono(D)) && curX < xs[xs.length - 1] && !derechaPres) {
-            nuevoX = obtenerPosicionXMayor(curX);
-            derechaPres = true;
-        } else if (!(entorno.sePresiono(entorno.TECLA_DERECHA) || entorno.sePresiono(d) || entorno.sePresiono(D))) {
-            derechaPres = false;
-        }
+	        if ((entorno.sePresiono(entorno.TECLA_DERECHA) || entorno.sePresiono(d) || entorno.sePresiono(D)) && curX < xs[xs.length - 1] && !derechaPres) {
+	            nuevoX = obtenerPosicionXMayor(curX);
+	            derechaPres = true;
+	        } else if (!(entorno.sePresiono(entorno.TECLA_DERECHA) || entorno.sePresiono(d) || entorno.sePresiono(D))) {
+	            derechaPres = false;
+	        }
 
-        if ((entorno.sePresiono(entorno.TECLA_ARRIBA) || entorno.sePresiono(w) || entorno.sePresiono(W)) && curY > ys[0] && !arribaPres) {
-            nuevoY = obtenerPosicionYMenor(curY);
-            arribaPres = true;
-        } else if (!(entorno.sePresiono(entorno.TECLA_ARRIBA) || entorno.sePresiono(w) || entorno.sePresiono(W))) {
-            arribaPres = false;
-        }
+	        if ((entorno.sePresiono(entorno.TECLA_ARRIBA) || entorno.sePresiono(w) || entorno.sePresiono(W)) && curY > ys[0] && !arribaPres) {
+	            nuevoY = obtenerPosicionYMenor(curY);
+	            arribaPres = true;
+	        } else if (!(entorno.sePresiono(entorno.TECLA_ARRIBA) || entorno.sePresiono(w) || entorno.sePresiono(W))) {
+	            arribaPres = false;
+	        }
 
-        if ((entorno.sePresiono(entorno.TECLA_ABAJO) || entorno.sePresiono(s) || entorno.sePresiono(S)) && curY < ys[ys.length - 1] && !abajoPres) {
-            nuevoY = obtenerPosicionYMayor(curY);
-            abajoPres = true;
-        } else if (!(entorno.sePresiono(entorno.TECLA_ABAJO) || entorno.sePresiono(s) || entorno.sePresiono(S))) {
-            abajoPres = false;
-        }
+	        if ((entorno.sePresiono(entorno.TECLA_ABAJO) || entorno.sePresiono(s) || entorno.sePresiono(S)) && curY < ys[ys.length - 1] && !abajoPres) {
+	            nuevoY = obtenerPosicionYMayor(curY);
+	            abajoPres = true;
+	        } else if (!(entorno.sePresiono(entorno.TECLA_ABAJO) || entorno.sePresiono(s) || entorno.sePresiono(S))) {
+	            abajoPres = false;
+	        }
 
-        if ((nuevoX != curX || nuevoY != curY) && !hayPlantaEnPosicion(nuevoX, nuevoY)) {
-            setPos(nuevoX, nuevoY);
-        }
+	        if ((nuevoX != curX || nuevoY != curY) && !hayPlantaEnPosicion(nuevoX, nuevoY)) {
+	            setPos(nuevoX, nuevoY);
+	        }
 
-        // se confirma la nueva posición con click o enter
-        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) || entorno.sePresiono(entorno.TECLA_ENTER)) {
-            moviendoPlanta = false;
-            plantaSeleccionada = -1;
-            tipoPlantaSeleccionada = "";
-        }
-    }
-}
+	        // se confirma la nueva posición con click o enter
+	        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) || entorno.sePresiono(entorno.TECLA_ENTER)) {
+	            moviendoPlanta = false;
+	            plantaSeleccionada = -1;
+	            tipoPlantaSeleccionada = "";
+	        }
+	    }
+	}
 
 	
 	
@@ -492,9 +507,13 @@ public class Jardin {
 	
 	public boolean hayPlantaEnPosicion(int x, int y) {
 	    for (int i = 0; i < rosa.length; i++) {
-	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) return true;
+	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) 
+	            return true;
 	    }
-	    // faltan chequear los arrays de nuez y explosiva
+	    for (int i = 0; i < nuez.length; i++) {
+	        if (nuez[i] != null && nuez[i].vivo && nuez[i].posX == x && nuez[i].posY == y) 
+	            return true;
+	    }
 	    return false;
 	}
 
@@ -542,17 +561,29 @@ public class Jardin {
 	}
 
 	private int getPosX() {
-	    if ("rosa".equals(tipoPlantaSeleccionada)) return rosa[plantaSeleccionada].posX;
+	    if ("rosa".equals(tipoPlantaSeleccionada)) 
+	        return rosa[plantaSeleccionada].posX;
+	    if ("nuez".equals(tipoPlantaSeleccionada)) 
+	        return nuez[plantaSeleccionada].posX;
 	    return 0;
 	}
+
 	private int getPosY() {
-	    if ("rosa".equals(tipoPlantaSeleccionada)) return rosa[plantaSeleccionada].posY;
+	    if ("rosa".equals(tipoPlantaSeleccionada)) 
+	        return rosa[plantaSeleccionada].posY;
+	    if ("nuez".equals(tipoPlantaSeleccionada)) 
+	        return nuez[plantaSeleccionada].posY;
 	    return 0;
 	}
+
 	private void setPos(int x, int y) {
 	    if ("rosa".equals(tipoPlantaSeleccionada)) {
 	        rosa[plantaSeleccionada].posX = x;
 	        rosa[plantaSeleccionada].posY = y;
+	    }
+	    if ("nuez".equals(tipoPlantaSeleccionada)) {
+	        nuez[plantaSeleccionada].posX = x;
+	        nuez[plantaSeleccionada].posY = y;
 	    }
 	}
 
