@@ -182,8 +182,6 @@ public class Jardin {
 			BolaDeFuego b = bFuego[i];
 			if (b == null) continue;
 			b.desplazar();
-			System.out.println(b.posX);
-			System.out.println(b.posY);
 
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeFuego.png"), b.posX, b.posY, 0);
 			if (cripta.hayZombieEnPosicion(b.posX, b.posY)) {
