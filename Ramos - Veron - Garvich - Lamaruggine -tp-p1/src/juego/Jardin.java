@@ -171,75 +171,76 @@ public class Jardin {
 	}
 	
 	public void dibujarPlantas() {
-		if(estado.esDerrota()) {
-			for(int i = 0; i < nuez.length; i++) {		
-				if (nuez[i] == null) continue;
-		    	if(nuez[i].vivo) {
-		    		if (reloj.ciclos(300, 600)) {
-		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD1.png"), nuez[i].posX, nuez[i].posY, 0);
-		    		}
-		    		else {
-		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD2.png"), nuez[i].posX, nuez[i].posY, 0.1);
-		    			}			 
-		    		}
-				}
-			
-			for(int i = 0; i < rosa.length; i++) {		
-				Rosa r = rosa[i];
-				if (r == null) continue;
-				if(r.vivo) {
-					if (reloj.ciclos(300, 600)) {
-						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD1.png"), rosa[i].posX, rosa[i].posY, 0);
-					} else {
-						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD2.png"), rosa[i].posX, rosa[i].posY, 0);
-					}			 
-				}
+	    if(estado.esDerrota()) {
+	        // Dibujar plantas en estado de derrota
+	        for(int i = 0; i < nuez.length; i++) {        
+	            if (nuez[i] == null) continue;
+	            if(nuez[i].vivo) {
+	                if (reloj.ciclos(300, 600)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD1.png"), nuez[i].posX, nuez[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD2.png"), nuez[i].posX, nuez[i].posY, 0.1);
+	                }             
+	            }
+	        }
+	        
+	        for(int i = 0; i < rosa.length; i++) {        
+	            Rosa r = rosa[i];
+	            if (r == null) continue;
+	            if(r.vivo) {
+	                if (reloj.ciclos(300, 600)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD1.png"), rosa[i].posX, rosa[i].posY, 0);
+	                } else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD2.png"), rosa[i].posX, rosa[i].posY, 0);
+	                }             
+	            }
+	        }
+	    }
 
-			}
-			
-		for(int i = 0; i < nuez.length; i++) {		//dibujar zombies base
+	    // ESTA PARTE DEBE ESTAR FUERA del if(estado.esDerrota()) para dibujar durante el juego
+	    if(estado.esJuego()) {
+	        // Dibujar nueces durante el juego
+	        for(int i = 0; i < nuez.length; i++) {
+	            if (nuez[i] == null) continue;
+	            if(nuez[i].vivo) {
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX, nuez[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX+5, nuez[i].posY-5, 0.1);
+	                }             
+	            }
+	        }
 
-			if (nuez[i] == null)
-				continue;
-	    	if(nuez[i].vivo) {
-	    		if (reloj.ciclos(200, 400)) {
-	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX, nuez[i].posY, 0);
-	    		}
-	    		else {
-	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX+5, nuez[i].posY-5, 0.1);
-	    			}			 
-	    		}
-			}
-		}
-
-		if(estado.esJuego()) {
-			for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
-				Rosa r = rosa[i];
-				if (r == null) continue;
-				if(r.vivo) {
-					if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
-						BolaDeFuego bola = rosa[i].disparar();
-						if (conteoBFuego >= bFuego.length * 0.9) aumentarLengthBFuego();
-						for(int a = 0; a < bFuego.length; a++) {
-							if (bFuego[a] == null) {
-								bFuego[a] = bola;
-								conteoBFuego ++;
-								break;
-							}
-						}
-					}
-					if (reloj.ciclos(200, 400)) {
-						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
-					} else {
-						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
-					}			 
-				}
-				if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("rosa")) {
-					Color marco = new Color(255, 255, 0, 100);
-					entorno.dibujarRectangulo(r.posX, r.posY, 125, 125, 0, marco);
-				}
-			}			 
-		}
+	        // Dibujar rosas durante el juego
+	        for(int i = 0; i < rosa.length; i++) {
+	            Rosa r = rosa[i];
+	            if (r == null) continue;
+	            if(r.vivo) {
+	                if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
+	                    BolaDeFuego bola = rosa[i].disparar();
+	                    if (conteoBFuego >= bFuego.length * 0.9) aumentarLengthBFuego();
+	                    for(int a = 0; a < bFuego.length; a++) {
+	                        if (bFuego[a] == null) {
+	                            bFuego[a] = bola;
+	                            conteoBFuego ++;
+	                            break;
+	                        }
+	                    }
+	                }
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
+	                } else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
+	                }             
+	            }
+	            if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("rosa")) {
+	                Color marco = new Color(255, 255, 0, 100);
+	                entorno.dibujarRectangulo(r.posX, r.posY, 125, 125, 0, marco);
+	            }
+	        }             
+	    }
 	}
 
 	public void dibujarProyectiles() {
