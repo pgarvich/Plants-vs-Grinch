@@ -464,7 +464,7 @@ public class Jardin {
 	        }
 
 	        // se confirma la nueva posición con click o enter
-	        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) || entorno.sePresiono(entorno.TECLA_ENTER)) {
+	        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) || entorno.seLevanto('q')) {
 	            moviendoPlanta = false;
 	            plantaSeleccionada = -1;
 	            tipoPlantaSeleccionada = "";
