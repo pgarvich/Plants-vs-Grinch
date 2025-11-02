@@ -8,6 +8,7 @@ public class Cripta {
 	private Entorno entorno;
 	private ZBase[] zBase;
 	private ZAlter[] zAlter;
+	private Lapida[] lapidas;
 	private Estado estado;
 	private Reloj reloj;
 	int ticksFuera;
@@ -15,6 +16,7 @@ public class Cripta {
 	int conteoBase;
 	int conteoAlter;
 	int zombiesMuertos = 0;
+	int lapidaADisparar = -1;
 
 	int zombiesVivos = 0;
 	boolean regalo1 = true;
@@ -39,6 +41,8 @@ public class Cripta {
 			for(int i = 0; i < zAlter.length; i++) {
 				zAlter[i] = new ZAlter(this.entorno, this.estado, this.reloj);				
 			}
+		
+		this.lapidas = new Lapida[50];
 	}
 		
 	public void rendirZombies() {
@@ -145,6 +149,12 @@ public class Cripta {
 		
 	}
 	
+	public void dibujarLapidas() {
+		for (int i = 0; i < lapidas.length; i++) {
+			if (lapidas[i] != null) entorno.dibujarImagen(Herramientas.cargarImagen("personajes/lapida.png"), lapidas[i].ejeX, lapidas[i].ejeY, 0);
+		}
+	}
+	
 	public void spawnZombies() {
 	    if((conteoBase >= zBase.length && conteoAlter >= zAlter.length) || zombiesVivos >= 15) {
 	        return;
@@ -220,16 +230,30 @@ public class Cripta {
 	    return false;
 	}
 
-	public void herirZombieEnPosicion(int x, int y, int damage) {
+	public void herirZombieEnPosicion(int x, int y, int damage, Jardin jardin) {
 	    for (int i = 0; i < zBase.length; i++) {
 	        if (zBase[i] != null && zBase[i].vivo) {
 	            if (Math.abs(zBase[i].posX - x) < 30 && Math.abs(zBase[i].posY - y) < 30) {
 	                zBase[i].vida -= damage;
 	                if (zBase[i].vida <= 0) {
+                    	int ejeX = zBase[i].posX;
+                    	int ejeY = zBase[i].posY;
 	                	zBase[i].vivo = false;
 	                    zBase[i] = null;
 	                    zombiesMuertos++;
 	                    zombiesVivos--;
+	                    
+	                    int random = (int) (Math.random() * 100) + 1;
+	                    if (random <= 50) {
+	                    	int posibleX = calcularPosibleX(ejeX);
+	                    	int posibleY = calcularPosibleY(ejeY);
+	                    	if(!hayLapidaEnPosicion(posibleX, posibleY) && !jardin.hayPlantaEnPosicion(posibleX, posibleY)) {
+	                    		Lapida lapida = new Lapida(entorno, estado, reloj, posibleX, posibleY, 1);
+	                    		for(int a = 0; a < lapidas.length; a++) {
+	                    			if (lapidas[i] == null) lapidas[i] = lapida;
+	                    		}
+	                    	}
+	                    }
 	                }
 	                return;
 	            }
@@ -248,6 +272,11 @@ public class Cripta {
 	            }
 	        }
 	    }
+	}
+	public void herirLapida(int damage) {
+		if(lapidaADisparar == -1) return;
+		lapidas[lapidaADisparar].vida -= damage;
+		if(lapidas[lapidaADisparar].vida <= 0) lapidas[lapidaADisparar] = null;
 	}
 
 	public boolean hayZombieEnFila(int posX, int posY) {
@@ -278,5 +307,37 @@ public class Cripta {
 		String eliminados = String.valueOf(zombiesMuertos); 
 		entorno.cambiarFont("Comic Sans MS", tamanio, Color.yellow);
 		entorno.escribirTexto(eliminados, posX, posY);
+	}
+	
+	public boolean hayLapidaEnPosicion(int x, int y) {
+		for(int i = 0; i < lapidas.length; i++) {
+			if(lapidas[i] != null && Math.abs(lapidas[i].ejeX - x) < 30 && Math.abs(lapidas[i].ejeY - y) < 30) {
+				lapidaADisparar = i;
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private int calcularPosibleX(int x) {
+		if(120 < x && x < 240) return 180;
+		else if(240 < x && x < 370) return 305;
+		else if(370 < x && x < 500) return 435;
+		else if(500 < x && x < 630) return 565;
+		else if(630 < x && x < 755) return 693;
+		else if(755 < x && x < 885) return 820;
+		else if(885 < x && x < 1010) return 948;
+		else if(1010 < x && x < 1135) return 1073;
+		else if(1135 < x && x < 1260) return 1198;
+		else if(1260 < x && x < 1390) return 1325;
+		return 1325;
+	}
+	private int calcularPosibleY(int y) {
+		if(170 < y && y < 288) return 229;
+		else if(288 < y && y < 415) return 352;
+		else if(415 < y && y < 545) return 480;
+		else if(545 < y && y < 670) return 608;
+		else if(670 < y && y < 800) return 735;
+		return 735;
 	}
 }

@@ -216,7 +216,11 @@ public class Jardin {
 
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeFuego.png"), b.posX, b.posY, 0);
 			if (cripta.hayZombieEnPosicion(b.posX, b.posY)) {
-				cripta.herirZombieEnPosicion(b.posX, b.posY, b.damage);
+				cripta.herirZombieEnPosicion(b.posX, b.posY, b.damage, this);
+				bFuego[i] = null;
+				conteoBFuego --;
+			} else if(cripta.hayLapidaEnPosicion(b.posX, b.posY)) {
+				cripta.herirLapida(b.damage);
 				bFuego[i] = null;
 				conteoBFuego --;
 			}
@@ -424,7 +428,7 @@ public class Jardin {
 		bFuego = nuevo;
 	}
 	
-	private boolean hayPlantaEnPosicion(int x, int y) {
+	public boolean hayPlantaEnPosicion(int x, int y) {
 	    for (int i = 0; i < rosa.length; i++) {
 	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) return true;
 	    }

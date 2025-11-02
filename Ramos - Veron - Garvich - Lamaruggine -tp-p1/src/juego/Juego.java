@@ -61,11 +61,11 @@ public class Juego extends InterfaceJuego
 		jardin.dibujarPlantas();
 		if (estado.esJuego()) {
 			cripta.spawnZombies();
+			cripta.dibujarLapidas();
 			cripta.dibujarZombies();
 			jardin.spawnPlanta();
 			jardin.moverPlanta();
 			jardin.crearAbono();
-
 			jardin.dibujarProyectiles();
 			cripta.mostrarZombiesVivos(18, 755, 135); 
 			cripta.mostrarZombiesEliminados(18, 762, 160);
