@@ -167,51 +167,46 @@ public class Jardin {
 			for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
 				Rosa r = rosa[i];
 				if (r == null) continue;
-		    	if(r.vivo) {
-		    		if (reloj.ciclos(300, 600)) {
-		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD1.png"), rosa[i].posX, rosa[i].posY, 0);
-		    		}
-		    		else {
-		    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD2.png"), rosa[i].posX, rosa[i].posY, 0);
-		    			}			 
-		    		}
+				if(r.vivo) {
+					if (reloj.ciclos(300, 600)) {
+						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD1.png"), rosa[i].posX, rosa[i].posY, 0);
+					} else {
+						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD2.png"), rosa[i].posX, rosa[i].posY, 0);
+					}			 
 				}
-		}
-		if(estado.esJuego()) {
-		for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
-			Rosa r = rosa[i];
-			if (r == null) continue;
-	    	if(r.vivo) {
-	    		if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
-	    			BolaDeFuego bola = rosa[i].disparar();
-	    			if (conteoBFuego >= bFuego.length * 0.9) aumentarLengthBFuego();
-	    			for(int a = 0; a < bFuego.length; a++) {
-	    				if (bFuego[a] == null) {
-	    					bFuego[a] = bola;
-	    					conteoBFuego ++;
-	    					break;
-	    				}
-	    			}
-	    		}
-	    		if (reloj.ciclos(200, 400)) {
-	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
-	    		}
-	    		else {
-	    			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
-<<<<<<< HEAD
-	    			}			 
-	    		}
 			}
-=======
-	    		}			 
-	    	}
-	    	if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("rosa")) {
-	    		Color marco = new Color(255, 255, 0, 100);
-                entorno.dibujarRectangulo(r.posX, r.posY, 125, 125, 0, marco);
-            }
->>>>>>> mover-plantas
+		}
+
+		if(estado.esJuego()) {
+			for(int i = 0; i < rosa.length; i++) {		//dibujar zombies base
+				Rosa r = rosa[i];
+				if (r == null) continue;
+				if(r.vivo) {
+					if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
+						BolaDeFuego bola = rosa[i].disparar();
+						if (conteoBFuego >= bFuego.length * 0.9) aumentarLengthBFuego();
+						for(int a = 0; a < bFuego.length; a++) {
+							if (bFuego[a] == null) {
+								bFuego[a] = bola;
+								conteoBFuego ++;
+								break;
+							}
+						}
+					}
+					if (reloj.ciclos(200, 400)) {
+						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
+					} else {
+						entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
+					}			 
+				}
+				if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("rosa")) {
+					Color marco = new Color(255, 255, 0, 100);
+					entorno.dibujarRectangulo(r.posX, r.posY, 125, 125, 0, marco);
+				}
+			}			 
 		}
 	}
+
 	public void dibujarProyectiles() {
 		// Dibuja las bolas de fuego
 		for(int i = 0; i < bFuego.length; i++) {
