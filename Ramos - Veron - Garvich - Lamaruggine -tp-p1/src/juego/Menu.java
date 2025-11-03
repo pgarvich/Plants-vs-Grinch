@@ -44,6 +44,15 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 						estado.setEstado(2);
 			}
 		}
+		
+		if(estado.esVictoria()) {
+			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/PastoV.png"), 700, 400, 0);
+			
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV1.png"), 102, 82, 0);
+			
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV1.png"), 300, 82, 0);
+		}
+		
 		if(estado.esDerrota()) {
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pastoDerrota.png"), 700, 400, 0);
 			

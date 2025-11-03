@@ -72,7 +72,7 @@ public class Jardin {
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 736, 0);
 		}
 		
-		if(estado.esJuego()) {
+		if(estado.esJuego() || estado.esVictoria()) {
 		if (reloj.ciclos(200, 1200)) {			//1er regalo
     		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 226, 0);
 		}
@@ -170,6 +170,11 @@ public class Jardin {
 		}
 	}
 	
+	public void victoriaPlanta() {
+		if(cripta.zombiesMuertos == 5) {
+			estado.setEstado(5);
+		}
+	}
 	public void debilitamiento() {
 	    if(!estado.esJuego()) return;
 	    
@@ -255,6 +260,33 @@ public class Jardin {
 	    }
 	}
 	public void dibujarPlantas() {
+		 if(estado.esVictoria()) {
+		        // Dibujar plantas en estado de derrota
+		        for(int i = 0; i < nuez.length; i++) {        
+		            if (nuez[i] == null) continue;
+		            if(nuez[i].vivo) {
+		                if (reloj.ciclos(300, 600)) {
+		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV1.png"), nuez[i].posX, nuez[i].posY, 0);
+		                }
+		                else {
+		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV2.png"), nuez[i].posX, nuez[i].posY, 0.1);
+		                }             
+		            }
+		        }
+		        
+		        for(int i = 0; i < rosa.length; i++) {        
+		            Rosa r = rosa[i];
+		            if (r == null) continue;
+		            if(r.vivo) {
+		                if (reloj.ciclos(300, 600)) {
+		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV1.png"), rosa[i].posX, rosa[i].posY, 0);
+		                } else {
+		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV2.png"), rosa[i].posX, rosa[i].posY, 0);
+		                }             
+		            }
+		        }
+		    }
+		 
 	    if(estado.esDerrota()) {
 	        // Dibujar plantas en estado de derrota
 	        for(int i = 0; i < nuez.length; i++) {        
@@ -288,7 +320,7 @@ public class Jardin {
 	        for(int i = 0; i < nuez.length; i++) {
 	            if (nuez[i] == null) continue;
 	            if(nuez[i].vivo) {
-	                if (reloj.ciclos(200, 400)) {
+	                if (reloj.ciclos(300, 600)) {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX, nuez[i].posY, 0);
 	                }
 	                else {
@@ -317,7 +349,7 @@ public class Jardin {
 	                        }
 	                    }
 	                }
-	                if (reloj.ciclos(200, 400)) {
+	                if (reloj.ciclos(300, 600)) {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
 	                } else {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);

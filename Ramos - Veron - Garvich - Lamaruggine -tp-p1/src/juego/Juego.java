@@ -54,7 +54,7 @@ public class Juego extends InterfaceJuego
 			reloj.tiempoObjeto(false, true, false, false);
 		if(estado.esJuego() && estado.estadoAnterior == 3)
 			reloj.tiempoObjeto(false, false, true, false);
-		if(estado.esJuego() || estado.esDerrota())
+		if(estado.esJuego() || estado.esDerrota() || estado.esVictoria())
 			reloj.tiempoObjeto(false, false, false, true);
 		estado.estadoAnterior = estado.getEstado();	
 		////////////////////////////////////////////////////////////////////////////////////
@@ -74,6 +74,7 @@ public class Juego extends InterfaceJuego
 		}
 		jardin.debilitamiento();
 		jardin.dibujarRegalos();
+		jardin.victoriaPlanta();
 		if(estado.esDerrota()) {
 			cripta.zombiesVictoriosos();
 			
