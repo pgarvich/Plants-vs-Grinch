@@ -15,6 +15,7 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 	
 	boolean aRose = false;
 	boolean aNuez = false;
+	boolean aChile = false;
 	
 	public Menu(Entorno entorno, Estado estado, Reloj reloj) {
 		this.entorno = entorno;
@@ -50,6 +51,8 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBladeD1.png"), 102, 82, 0);
 			
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezD1.png"), 300, 82, 0);
+			
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), 470, 82, 0);
 		}
 		if(estado.esPausa()) {
 			if(!sobre(700, 1369, 580, 760)) {
@@ -97,9 +100,13 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 
 			if(!aRose)
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), 102, 82, 0);
-			
 			else
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), 102, 82, 0);
+			
+			if(!aChile)
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), 470, 82, 0);
+			else
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chileSelected.png"), 470, 82, 0);
 			
 		}
 	}
