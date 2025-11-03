@@ -9,9 +9,16 @@ public class Jardin {
 	private Entorno entorno;
 	private Estado estado;
 	private Reloj reloj;
+<<<<<<< HEAD
 	Rosa[] rosa;
 	Nuez [] nuez;
 	BolaDeFuego[] bFuego;
+=======
+	private Rosa[] rosa;
+	private Nuez [] nuez;
+	private Chile[] chile;
+	private BolaDeFuego[] bFuego;
+>>>>>>> 0d417b7 (chile (planta explosiva) añadida)
 	private Menu menu;
 	private Cripta cripta;
 	
@@ -20,6 +27,7 @@ public class Jardin {
 	int abono = 100;
 	boolean aRosa = false;
 	boolean aNuez = false;
+	boolean aChile = false;
 	int conteoRosa = 0;
 	int conteoNuez = 0;
 	int conteoBFuego = 0;
@@ -48,6 +56,7 @@ public class Jardin {
 		
 		this.nuez = new Nuez[50];
 		this.rosa = new Rosa[50];
+		this.chile = new Chile[20];
 		this.bFuego = new BolaDeFuego[100];
 		
 		for(int i = 0; i < nuez.length; i++) {
@@ -235,6 +244,11 @@ public class Jardin {
 	                }             
 	            }
 	        }
+	        
+	        for(int i = 0; i < chile.length; i++) {
+	        	if(chile[i] == null) continue;
+                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	        }
 	    }
 
 
@@ -272,7 +286,17 @@ public class Jardin {
 	                Color marco = new Color(255, 255, 0, 100);
 	                entorno.dibujarRectangulo(r.posX, r.posY, 125, 125, 0, marco);
 	            }
-	        }             
+	        }
+	        
+	        //dibujar chiles
+	        for(int i = 0; i < chile.length; i++) {
+	        	if(chile[i] == null) continue;
+                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+                if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("chile")) {
+                    Color marco = new Color(255, 255, 0, 100);
+                    entorno.dibujarRectangulo(chile[i].posX, chile[i].posY, 125, 125, 0, marco);
+                }
+	        }
 	    }
 	}
 
@@ -286,15 +310,25 @@ public class Jardin {
 		if(40 < mX && mX < 165 && 20 < mY && mY < 145 && abono >= 60 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
 			aRosa = true;
 			aNuez = false;
+			aChile = false;
 			menu.aNuez = false;
-			
+			menu.aChile = false;
 		}
 		
 		if(250 < mX && mX < 350 && 20 < mY && mY < 145 && abono >= 40 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
 			aNuez = true;
 			aRosa = false;
+			aChile = false;
 			menu.aRose = false;
-			
+			menu.aChile = false;
+		}
+		
+		if(420 <mX && mX < 520 && 20 < mY && mY < 145 && abono >= 120 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
+			aChile = true;
+			aRosa = false;
+			aNuez = false;
+			menu.aRose = false;
+			menu.aNuez = false;
 		}
 		
 		if(aNuez) {
@@ -303,6 +337,10 @@ public class Jardin {
 		
 		if(aRosa) {
 			menu.aRose = true;
+		}
+		
+		if(aChile) {
+			menu.aChile = true;
 		}
 		
 			if(120 < mX && mX < 240) {
@@ -364,17 +402,22 @@ public class Jardin {
 				}
 			}
 			
+			for(int i = 0; i < chile.length; i++) {
+				if(chile[i] != null && chile[i].posX == posibleX && chile[i].posY == posibleY) return;
+			}
+			
 			if(aRosa == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
-			rosa[conteoRosa].posX = posibleX;
-			rosa[conteoRosa].posY = posibleY;
-			rosa[conteoRosa].vivo = true;
-			conteoRosa += 1;
-			abono -= 60;
+				rosa[conteoRosa].posX = posibleX;
+				rosa[conteoRosa].posY = posibleY;
+				rosa[conteoRosa].vivo = true;
+				conteoRosa += 1;
+				abono -= 60;
 
-			if(abono < 60) {
-				aRosa = false;
-				menu.aRose = false;
-			}}
+				if(abono < 60) {
+					aRosa = false;
+					menu.aRose = false;
+				}
+			}
 			
 			if(aNuez == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
 				nuez[conteoNuez].posX = posibleX;
@@ -386,7 +429,23 @@ public class Jardin {
 				if(abono < 40) {
 					aNuez = false;
 					menu.aNuez = false;
-				}}
+				}
+			}
+			
+			if(aChile == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
+				Chile c = new Chile(entorno, estado, reloj, posibleX, posibleY);
+				for (int i = 0; i < chile.length; i++) {
+					if(chile[i] == null) {
+						chile[i] = c;
+						abono -= c.abonoN;
+						break;
+					}
+				}
+				if(abono < c.abonoN) {
+					aChile = false;
+					menu.aChile = false;
+				}
+			}
 			
 		
 	}
@@ -420,6 +479,16 @@ public class Jardin {
 	                    return;
 	                }
 	            }
+	            
+	            for(int i = 0; i < chile.length; i++) {
+	            	if (chile[i] != null && chile[i].posX == posibleX && chile[i].posY == posibleY) {
+	            		plantaSeleccionada = i;
+	                    tipoPlantaSeleccionada = "chile";
+	                    moviendoPlanta = true;
+	                    return;
+	            	}
+	            }
+	            
 	        }
 	    } else {
 	        int curX = getPosX();
@@ -510,6 +579,10 @@ public class Jardin {
 	        if (nuez[i] != null && nuez[i].vivo && nuez[i].posX == x && nuez[i].posY == y) 
 	            return true;
 	    }
+	    for (int i = 0; i < chile.length; i++) {
+	        if (chile[i] != null && chile[i].posX == x && chile[i].posY == y) 
+	            return true;
+	    }
 	    return false;
 	}
 
@@ -561,6 +634,8 @@ public class Jardin {
 	        return rosa[plantaSeleccionada].posX;
 	    if ("nuez".equals(tipoPlantaSeleccionada)) 
 	        return nuez[plantaSeleccionada].posX;
+	    if ("chile".equals(tipoPlantaSeleccionada))
+	    	return chile[plantaSeleccionada].posX;
 	    return 0;
 	}
 
@@ -569,6 +644,8 @@ public class Jardin {
 	        return rosa[plantaSeleccionada].posY;
 	    if ("nuez".equals(tipoPlantaSeleccionada)) 
 	        return nuez[plantaSeleccionada].posY;
+	    if ("chile".equals(tipoPlantaSeleccionada)) 
+	        return chile[plantaSeleccionada].posY;
 	    return 0;
 	}
 
@@ -580,6 +657,10 @@ public class Jardin {
 	    if ("nuez".equals(tipoPlantaSeleccionada)) {
 	        nuez[plantaSeleccionada].posX = x;
 	        nuez[plantaSeleccionada].posY = y;
+	    }
+	    if ("chile".equals(tipoPlantaSeleccionada)) {
+	        chile[plantaSeleccionada].posX = x;
+	        chile[plantaSeleccionada].posY = y;
 	    }
 	}
 
