@@ -77,16 +77,8 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 
 
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
-			if(!sobre(1038, 1263, 38, 122)) {
-				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Pausa.png"), 1150, 80, 0);
-			}
-			else {
-				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Pausa2.png"), 1150, 80, 0);
-				if(entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO))
-					estado.setEstado(3);
-			}
 
-			//reloj.mostrarTiempo(50, 650, 50);
+
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/MenuSuperior9.png"), 700, 90, 0, 1);
 			
@@ -100,7 +92,14 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			
 			else
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), 102, 82, 0);
-			
+			if(!sobre(1038, 1263, 38, 122)) {
+				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Pausa.png"), 1150, 80, 0);
+			}
+			else {
+				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Pausa2.png"), 1150, 80, 0);
+				if(entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO))
+					estado.setEstado(3);
+			}
 		}
 	}
 	public void contarTicks(boolean iniciar) {

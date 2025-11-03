@@ -16,7 +16,7 @@ public class Jardin {
 	private Cripta cripta;
 	
 	int[] xs = {180, 305, 435, 565, 693, 820, 948, 1073, 1198, 1325};
-	int[] ys = {229, 352, 480, 608, 735};
+	int[] ys = {220, 350, 480, 610, 740};
 	int abono = 100;
 	boolean aRosa = false;
 	boolean aNuez = false;
@@ -170,6 +170,90 @@ public class Jardin {
 		}
 	}
 	
+	public void debilitamiento() {
+	    if(!estado.esJuego()) return;
+	    
+	    // Reiniciar todos los estados de detención primero
+	    for(int j = 0; j < cripta.zBase.length; j++) {
+	        if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
+	            cripta.zBase[j].detener = false;
+	        }
+	    }
+	    for(int j = 0; j < cripta.zAlter.length; j++) {
+	        if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
+	            cripta.zAlter[j].detener = false;
+	        }
+	    }
+	    
+	    // Ahora verificar colisiones
+	    for(int i = 0; i < nuez.length; i++) {        
+	        if (nuez[i] == null || !nuez[i].vivo) continue;
+	        
+	        for(int j = 0; j < cripta.zBase.length; j++) {
+	            if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
+	                if(Math.abs(cripta.zBase[j].posY - nuez[i].posY) < 30 && 
+	                   cripta.zBase[j].posX - nuez[i].posX <= 80 && 
+	                   cripta.zBase[j].posX - nuez[i].posX > 0) {
+	                    cripta.zBase[j].detener = true;
+	                    nuez[i].vida -= 1;
+	                    if(nuez[i].vida <= 0) {
+	                        nuez[i].vivo = false;
+	                    }
+	                }
+	            }
+	        }
+
+	        for(int j = 0; j < cripta.zAlter.length; j++) {
+	            if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
+	                if(Math.abs(cripta.zAlter[j].posY - nuez[i].posY) < 30 && 
+	                   cripta.zAlter[j].posX - nuez[i].posX <= 80 && 
+	                   cripta.zAlter[j].posX - nuez[i].posX > 0) {
+	                    cripta.zAlter[j].detener = true;
+	                    nuez[i].vida -= 1;
+	                    
+	                    if(nuez[i].vida <= 0) {
+	                        nuez[i].vivo = false;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    
+	    // Misma lógica para rosas
+	    for(int i = 0; i < rosa.length; i++) {        
+	        if (rosa[i] == null || !rosa[i].vivo) continue;
+	        
+	        for(int j = 0; j < cripta.zBase.length; j++) {
+	            if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
+	                if(Math.abs(cripta.zBase[j].posY - rosa[i].posY) < 30 && 
+	                   cripta.zBase[j].posX - rosa[i].posX <= 80 && 
+	                   cripta.zBase[j].posX - rosa[i].posX > 0) {
+	                    cripta.zBase[j].detener = true;
+	                    rosa[i].vida -= 1;
+	                    
+	                    if(rosa[i].vida <= 0) {
+	                        rosa[i].vivo = false;
+	                    }
+	                }
+	            }
+	        }
+
+	        for(int j = 0; j < cripta.zAlter.length; j++) {
+	            if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
+	                if(Math.abs(cripta.zAlter[j].posY - rosa[i].posY) < 30 && 
+	                   cripta.zAlter[j].posX - rosa[i].posX <= 80 && 
+	                   cripta.zAlter[j].posX - rosa[i].posX > 0) {
+	                    cripta.zAlter[j].detener = true;
+	                    rosa[i].vida -= 1;
+	                    
+	                    if(rosa[i].vida <= 0) {
+	                        rosa[i].vivo = false;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	}
 	public void dibujarPlantas() {
 	    if(estado.esDerrota()) {
 	        // Dibujar plantas en estado de derrota
@@ -336,19 +420,19 @@ public class Jardin {
 			}
 			
 			if(170 < mY && mY < 288) {
-				posibleY = 229;
+				posibleY = 220;
 			}
 			else if(288 < mY && mY < 415) {
-				posibleY = 352;
+				posibleY = 350;
 			}
 			else if(415 < mY && mY < 545) {
 				posibleY = 480;
 			}
 			else if(545 < mY && mY < 670) {
-				posibleY = 608;
+				posibleY = 610;
 			}
 			else if(670 < mY && mY < 800) {
-				posibleY = 735;
+				posibleY = 740;
 			}
 			else {
 				return;
@@ -463,8 +547,8 @@ public class Jardin {
 	            setPos(nuevoX, nuevoY);
 	        }
 
-	        // se confirma la nueva posición con click o enter
-	        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) || entorno.seLevanto('q')) {
+	        // se confirma la nueva posición con click o q
+	        if (entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) || entorno.seLevanto('q') || entorno.sePresiono('Q')) {
 	            moviendoPlanta = false;
 	            plantaSeleccionada = -1;
 	            tipoPlantaSeleccionada = "";

@@ -72,6 +72,7 @@ public class Juego extends InterfaceJuego
 			reloj.mostrarTiempo(18, 730, 94);
 			
 		}
+		jardin.debilitamiento();
 		jardin.dibujarRegalos();
 		if(estado.esDerrota()) {
 			cripta.zombiesVictoriosos();

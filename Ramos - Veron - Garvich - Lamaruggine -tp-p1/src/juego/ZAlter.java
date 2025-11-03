@@ -12,6 +12,7 @@ public class ZAlter {
 	int posY;
 	int vida = 40;
 	boolean derecha = false;
+	boolean detener = false;
 	boolean zombieVictorioso = false;
 	
 	public ZAlter(Entorno entorno, Estado estado, Reloj reloj) {
@@ -21,10 +22,14 @@ public class ZAlter {
 
 }
 	public void desplazar() {
-		if(!derecha)
+		 if(detener)
+			return;
+		 
+		else if(!derecha)
 			posX -= 1.5;
+		
 		else
-			posX +=1;
+			posX += 1;
 	}
 	public void victoriaZombie() {
 		if(posX <= 100) {

@@ -10,7 +10,7 @@ public class Nuez {
 	boolean vivo = false;
 	int posX;
 	int posY;
-	int vida = 500;
+	int vida = 1200;
 	int abonoN = 40;
 	
 	public Nuez(Entorno entorno, Estado estado, Reloj reloj) {

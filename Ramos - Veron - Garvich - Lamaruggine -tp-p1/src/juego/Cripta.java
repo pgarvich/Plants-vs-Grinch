@@ -6,8 +6,8 @@ import entorno.Herramientas;
 
 public class Cripta {
 	private Entorno entorno;
-	private ZBase[] zBase;
-	private ZAlter[] zAlter;
+	ZBase[] zBase;
+	ZAlter[] zAlter;
 	private Lapida[] lapidas;
 	private Estado estado;
 	private Reloj reloj;
@@ -118,35 +118,61 @@ public class Cripta {
 	    } 
 	} 
 	public void dibujarZombies() {
-			 for(int i = 0; i < zBase.length; i++) {		//dibujar zombies base
-		            if (zBase[i] == null) 
-		                continue;
-		            if(zBase[i].vivo) {
-		            	zBase[i].desplazar();
-		            	zBase[i].victoriaZombie();
-		            	if (reloj.ciclos(200, 400)) {
-		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase1.png"), zBase[i].posX, zBase[i].posY, 0);
-                 }
-		            	else {
-		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase2.png"), zBase[i].posX, zBase[i].posY, 0);
-                 }			 
-			 }
-		 }
-			 for(int i = 0; i < zAlter.length; i++) {		//dibujar zombies base
-		            if (zAlter[i] == null) 
-		                continue;
-		            if(zAlter[i].vivo) {
-		            	zAlter[i].desplazar();
-		            	zAlter[i].victoriaZombie();
-		            	if (reloj.ciclos(200, 400)) {
-		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter1.png"), zAlter[i].posX, zAlter[i].posY, 0);
-              }
-		            	else {
-		            		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter2.png"), zAlter[i].posX, zAlter[i].posY, 0);
-              }			 
-			 }
-		 }
-		
+	    for(int i = 0; i < zBase.length; i++) {        //dibujar zombies base
+	        if (zBase[i] == null) 
+	            continue;
+	        if(zBase[i].vivo) {
+	            zBase[i].desplazar();
+	            zBase[i].victoriaZombie();
+	            
+	            if(zBase[i].detener) {
+	                // Animación de ataque para zBase cuando está detenido
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBaseAtk1.png"), zBase[i].posX, zBase[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBaseAtk2.png"), zBase[i].posX, zBase[i].posY, 0);
+	                }
+	            }
+	            else {
+	                // Animación normal de caminata para zBase
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase1.png"), zBase[i].posX, zBase[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zBase2.png"), zBase[i].posX, zBase[i].posY, 0);
+	                }
+	            }
+	        }
+	    }
+	    
+	    for(int i = 0; i < zAlter.length; i++) {        //dibujar zombies alter
+	        if (zAlter[i] == null) 
+	            continue;
+	        if(zAlter[i].vivo) {
+	            zAlter[i].desplazar();
+	            zAlter[i].victoriaZombie();
+	            
+	            if(zAlter[i].detener) {
+	                // Animación de ataque para zAlter cuando está detenido
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlterAtk1.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlterAtk2.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                }
+	            }
+	            else {
+	                // Animación normal de caminata para zAlter
+	                if (reloj.ciclos(200, 400)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter1.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/zAlter2.png"), zAlter[i].posX, zAlter[i].posY, 0);
+	                }
+	            }
+	        }
+	    }
 	}
 	
 	public void dibujarLapidas() {
@@ -160,6 +186,7 @@ public class Cripta {
 	        return;
 	    }
 	    contarTicks(false);
+	    
 	    if(cuantosTicks > 200) {
 	    
 	    int linea = (int) (Math.random() * 5) + 1;
@@ -175,7 +202,7 @@ public class Cripta {
 	    else
 	        posI = 740;
 	    
-	    int num = (int)(Math.random() * 60) + 1;
+	    int num = (int)(Math.random() * 50) + 1;
 
 	    if (num >= 40 && conteoAlter < zAlter.length) {
 	        // Zombie Alter
