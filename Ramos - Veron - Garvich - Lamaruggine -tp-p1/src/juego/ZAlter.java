@@ -29,7 +29,7 @@ public class ZAlter {
 			posX -= 1.5;
 		
 		else
-			posX += 1;
+			posX += 1.8;
 	}
 	public void victoriaZombie() {
 		if(posX <= 100) {

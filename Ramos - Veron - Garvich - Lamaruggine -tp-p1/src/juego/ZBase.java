@@ -22,15 +22,15 @@ public class ZBase {
 
 	}
 	public void desplazar() {
-		 if(detener)
+		 if(detener) {
 			return;
-		 
-		else if(!derecha)
+		 }
+		else if(!derecha) {
 			posX -= 0.8;
-		
-		else
-			posX += 1;
 	}
+		else {
+			posX += 1;
+	}}
 	public void victoriaZombie() {
 		if(posX <= 100) {
 			estado.setEstado(4);

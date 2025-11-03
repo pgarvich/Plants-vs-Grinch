@@ -52,11 +52,13 @@ public class Cripta {
 	}
 	
 	public void zombiesVictoriosos() {
-	    for(int i = 0; i < zBase.length; i++) {        //dibujar zombies base
+	    
+		for(int i = 0; i < zBase.length; i++) {        //dibujar zombies base
 	        if (zBase[i] == null) 
 	            continue;
 	        if(zBase[i].vivo) {
 	            zBase[i].derecha = true;
+	        	zBase[i].detener = false;
 	            zBase[i].desplazar();
 	            if(!zBase[i].zombieVictorioso) {
 	                if (reloj.ciclos(200, 400)) {
@@ -89,6 +91,7 @@ public class Cripta {
 	            continue;
 	        if(zAlter[i].vivo) {
 	            zAlter[i].derecha = true;
+            	zAlter[i].detener = false;
 	            zAlter[i].desplazar();
 	            if(!zAlter[i].zombieVictorioso) {
 	                if (reloj.ciclos(200, 400)) {
@@ -325,7 +328,7 @@ public class Cripta {
 	}
 	
 	public void mostrarZombiesVivos(int tamanio, int posX, int posY) {
-		String vivos = String.valueOf(zBase.length - zombiesMuertos);
+		String vivos = String.valueOf((zBase.length + zAlter.length) - zombiesMuertos);
 		entorno.cambiarFont("Comic Sans MS", tamanio, Color.yellow);
 		entorno.escribirTexto(vivos, posX, posY);
 	}
