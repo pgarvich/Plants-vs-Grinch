@@ -9,6 +9,7 @@ public class ZBase {
     int posX;
     int posY;
     int vida = 80;
+    int ultimoDisparo = 0;
     boolean zombieVictorioso = false;
     
     public ZBase(Estado estado) {
@@ -35,5 +36,14 @@ public class ZBase {
             zombieVictorioso = true;
         }
     }
+    
+    public boolean puedeDisparar(Reloj reloj) {
+		int actual = reloj.getTiempo();
+		if (actual - ultimoDisparo >= 2000 && !detener) {
+			ultimoDisparo = actual;
+			return true;
+		}
+		return false;
+	}
 }
 

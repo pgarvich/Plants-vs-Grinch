@@ -13,6 +13,7 @@ public class Jardin {
 	Nuez [] nuez;
 	Chile[] chile;
 	BolaDeFuego[] bFuego;
+	BolaDeNieve[] bNieve;
 	private Menu menu;
 	private Cripta cripta;
 	
@@ -26,11 +27,14 @@ public class Jardin {
 	int conteoRosa = 0;
 	int conteoNuez = 0;
 	int conteoBFuego = 0;
+	int conteoBNieve = 0;
 	int ticksFuera;
 	int cuantosTicks;
 	int regaloPerdido;
-
 	
+	int indexPlantaADisparar = -1;
+	String tipoPlantaADisparar = "";
+
 	int plantaSeleccionada = -1;
 	String tipoPlantaSeleccionada = "";
 	boolean moviendoPlanta = false;
@@ -53,6 +57,7 @@ public class Jardin {
 		this.rosa = new Rosa[50];
 		this.chile = new Chile[20];
 		this.bFuego = new BolaDeFuego[100];
+		this.bNieve = new BolaDeNieve[100];
 		
 		for(int i = 0; i < nuez.length; i++) {
 			nuez[i] = new Nuez();
@@ -435,10 +440,9 @@ public class Jardin {
 			}
 			
 			for(int i = 0; i < rosa.length; i++){
-				if(rosa[i] != null && nuez[i] != null) {
-					if((rosa[i].posX == posibleX && rosa[i].posY == posibleY) || (nuez[i].posX == posibleX && nuez[i].posY == posibleY)) {
-						return;
-					}
+				if((rosa[i] != null && rosa[i].vivo && rosa[i].posX == posibleX && rosa[i].posY == posibleY)
+					|| (nuez[i] != null && nuez[i].vivo && nuez[i].posX == posibleX && nuez[i].posY == posibleY)) {
+					return;
 				}
 			}
 			
@@ -640,16 +644,50 @@ public class Jardin {
 	
 	public boolean hayPlantaEnPosicion(int x, int y) {
 	    for (int i = 0; i < rosa.length; i++) {
-	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) 
+	        if (rosa[i] != null && rosa[i].vivo && Math.abs(rosa[i].posX - x) < 20 && Math.abs(rosa[i].posY - y) < 20) {
+	        	indexPlantaADisparar = i;
+	        	tipoPlantaADisparar = "rosa";
 	            return true;
+	        }
 	    }
 	    for (int i = 0; i < nuez.length; i++) {
-	        if (nuez[i] != null && nuez[i].vivo && nuez[i].posX == x && nuez[i].posY == y) 
+	        if (nuez[i] != null && nuez[i].vivo && Math.abs(nuez[i].posX - x) < 20 && Math.abs(nuez[i].posY - y) < 20) {
+	        	indexPlantaADisparar = i;
+	        	tipoPlantaADisparar = "nuez";
 	            return true;
+	        }
 	    }
 	    for (int i = 0; i < chile.length; i++) {
-	        if (chile[i] != null && chile[i].posX == x && chile[i].posY == y) 
+	        if (chile[i] != null && Math.abs(chile[i].posX - x) < 20 && Math.abs(chile[i].posY - y) < 20) {
+	        	indexPlantaADisparar = i;
+	        	tipoPlantaADisparar = "chile";
 	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
+	public boolean hayPlantaEnFila(int x, int y) {
+		for (int i = 0; i < rosa.length; i++) {
+			if (rosa[i] != null && rosa[i].vivo 
+		            && Math.abs(rosa[i].posY - y) < 30
+		            && rosa[i].posX < x) {
+		            return true;
+		        }
+	    }
+	    for (int i = 0; i < nuez.length; i++) {
+	    	if (nuez[i] != null && nuez[i].vivo 
+		            && Math.abs(nuez[i].posY - y) < 30
+		            && nuez[i].posX < x) {
+		            return true;
+		        }
+	    }
+	    for (int i = 0; i < chile.length; i++) {
+	    	if (chile[i] != null
+		            && Math.abs(chile[i].posY - y) < 30
+		            && chile[i].posX < x) {
+		            return true;
+		        }
 	    }
 	    return false;
 	}

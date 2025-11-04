@@ -24,7 +24,7 @@ public class Juego extends InterfaceJuego
 	    this.menu = new Menu(this.entorno, this.estado);
 	    this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
 	    this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu, this.cripta);
- 	    this.combate = new Combate(this.entorno, this.jardin, this.cripta, this.estado);
+ 	    this.combate = new Combate(this.entorno, this.jardin, this.cripta, this.estado, this.reloj);
 	    
 	    this.entorno.iniciar();
 	}
