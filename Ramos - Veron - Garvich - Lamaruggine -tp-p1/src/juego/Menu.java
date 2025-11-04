@@ -53,6 +53,8 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV1.png"), 102, 82, 0);
 			
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV1.png"), 300, 82, 0);
+			
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), 470, 82, 0);
 		}
 		
 		if(estado.esDerrota()) {
