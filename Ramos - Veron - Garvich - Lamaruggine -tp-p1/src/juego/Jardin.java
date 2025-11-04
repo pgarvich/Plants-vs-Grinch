@@ -26,6 +26,8 @@ public class Jardin {
 	int ticksFuera;
 	int cuantosTicks;
 	int regaloPerdido;
+	int rosasPosibles;
+	int nuecesPosibles;
 	
 	int plantaSeleccionada = -1;
 	String tipoPlantaSeleccionada = "";

@@ -46,7 +46,7 @@ public class Cripta {
 	}
 		
 	public void rendirZombies() {
-		if(zombiesMuertos == 70) {
+		if(zombiesMuertos == 50) {
 			estado.setEstado(5);
 		}
 	}
@@ -57,7 +57,6 @@ public class Cripta {
 	        if (zBase[i] == null) 
 	            continue;
 	        if(zBase[i].vivo) {
-	            zBase[i].derecha = true;
 	        	zBase[i].detener = false;
 	            zBase[i].desplazar();
 	            if(!zBase[i].zombieVictorioso) {
@@ -90,7 +89,6 @@ public class Cripta {
 	        if (zAlter[i] == null) 
 	            continue;
 	        if(zAlter[i].vivo) {
-	            zAlter[i].derecha = true;
             	zAlter[i].detener = false;
 	            zAlter[i].desplazar();
 	            if(!zAlter[i].zombieVictorioso) {
