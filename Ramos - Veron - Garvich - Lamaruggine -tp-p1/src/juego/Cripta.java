@@ -301,6 +301,27 @@ public class Cripta {
 	        }
 	    }
 	}
+	
+	public void herirZombiesEnRango(Chile chile, Jardin jardin) {
+		int minX = chile.minXExplosion;
+		int maxX = chile.maxXExplosion;
+		int minY = chile.minYExplosion;
+		int maxY = chile.maxYExplosion;
+		
+		for(int i = 0; i < zBase.length; i++) {
+			if(zBase[i] == null || !zBase[i].vivo) continue;
+			if(zBase[i].posX < maxX && zBase[i].posX > minX && zBase[i].posY < maxY && zBase[i].posY > minY) {
+				herirZombieEnPosicion(zBase[i].posX, zBase[i].posY, chile.damage, jardin);
+			}
+		}
+		for(int i = 0; i < zAlter.length; i++) {
+			if(zAlter[i] == null || !zAlter[i].vivo) continue;
+			if(zAlter[i].posX < maxX && zAlter[i].posX > minX && zAlter[i].posY < maxY && zAlter[i].posY > minY) {
+				herirZombieEnPosicion(zAlter[i].posX, zAlter[i].posY, chile.damage, jardin);
+			}
+		}
+	}
+	
 	public void herirLapida(int damage) {
 		if(lapidaADisparar == -1) return;
 		lapidas[lapidaADisparar].vida -= damage;

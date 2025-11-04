@@ -29,70 +29,69 @@ public class Chile {
 	private void calcularRangoExplosion() {
 		switch (posX) {
 	    	case 180:
-	        	minXExplosion = 120;
-	        	maxXExplosion = 240;
-	        	break;
-	    	case 305:
-	        	minXExplosion = 240;
+	        	minXExplosion = 0;
 	        	maxXExplosion = 370;
 	        	break;
-	    	case 435:
-	        	minXExplosion = 370;
+	    	case 305:
+	        	minXExplosion = 120;
 	        	maxXExplosion = 500;
 	        	break;
-	    	case 565:
-	        	minXExplosion = 500;
+	    	case 435:
+	        	minXExplosion = 240;
 	        	maxXExplosion = 630;
 	        	break;
-	    	case 693:
-	        	minXExplosion = 630;
+	    	case 565:
+	        	minXExplosion = 370;
 	        	maxXExplosion = 755;
 	        	break;
-	    	case 820:
-	        	minXExplosion = 755;
+	    	case 693:
+	        	minXExplosion = 500;
 	        	maxXExplosion = 885;
 	        	break;
-	    	case 948:
-	        	minXExplosion = 885;
+	    	case 820:
+	        	minXExplosion = 630;
 	        	maxXExplosion = 1010;
 	        	break;
-	    	case 1073:
-	        	minXExplosion = 1010;
+	    	case 948:
+	        	minXExplosion = 755;
 	        	maxXExplosion = 1135;
 	        	break;
-	    	case 1198:
-	        	minXExplosion = 1135;
+	    	case 1073:
+	        	minXExplosion = 885;
 	        	maxXExplosion = 1260;
 	        	break;
-	    	case 1325:
-	        	minXExplosion = 1260;
+	    	case 1198:
+	        	minXExplosion = 1010;
 	        	maxXExplosion = 1390;
+	        	break;
+	    	case 1325:
+	        	minXExplosion = 1135;
+	        	maxXExplosion = 1515;
 	        	break;
 		}
 
 		switch (posY) {
-	    	case 229:
+	    	case 220:
 	        	minYExplosion = 170;
-	        	maxYExplosion = 288;
-	        	break;
-	    	case 352:
-	        	minYExplosion = 288;
 	        	maxYExplosion = 415;
 	        	break;
-	    	case 480:
-	        	minYExplosion = 415;
+	    	case 350:
+	        	minYExplosion = 170;
 	        	maxYExplosion = 545;
 	        	break;
-	    	case 608:
-	        	minYExplosion = 545;
+	    	case 480:
+	        	minYExplosion = 288;
 	        	maxYExplosion = 670;
 	        	break;
-	    	case 735:
-	        	minYExplosion = 670;
+	    	case 610:
+	        	minYExplosion = 415;
+	        	maxYExplosion = 800;
+	        	break;
+	    	case 740:
+	        	minYExplosion = 545;
 	        	maxYExplosion = 800;
 	        	break;
 		}
-
 	}
 	
 }

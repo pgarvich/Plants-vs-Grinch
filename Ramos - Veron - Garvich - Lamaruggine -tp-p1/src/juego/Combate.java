@@ -100,6 +100,36 @@ public class Combate {
                 }
             }
         }
+        
+        // colisiones de chiles
+        for(int i = 0; i < jardin.chile.length; i++) {
+        	if(jardin.chile[i] == null) continue;
+        	
+        	for(int j = 0; j < cripta.zBase.length; j++) {
+                if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
+                    if(Math.abs(cripta.zBase[j].posY - jardin.chile[i].posY) < 30 && 
+                       cripta.zBase[j].posX - jardin.chile[i].posX <= 80 && 
+                       cripta.zBase[j].posX - jardin.chile[i].posX > 0) {
+                        cripta.herirZombiesEnRango(jardin.chile[i], jardin);
+                        jardin.chile[i] = null;
+                        break;
+                    }
+                }
+            }
+        	
+        	for(int j = 0; j < cripta.zAlter.length; j++) {
+                if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
+                    if(Math.abs(cripta.zAlter[j].posY - jardin.chile[i].posY) < 30 && 
+                       cripta.zAlter[j].posX - jardin.chile[i].posX <= 80 && 
+                       cripta.zAlter[j].posX - jardin.chile[i].posX > 0) {
+                        cripta.herirZombiesEnRango(jardin.chile[i], jardin);
+                        jardin.chile[i] = null;
+                        break;
+                    }
+                }
+            }
+        	
+        }
     }
     
     public void gestionarDisparos() {

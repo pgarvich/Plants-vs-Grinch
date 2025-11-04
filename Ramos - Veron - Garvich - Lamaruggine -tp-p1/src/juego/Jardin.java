@@ -9,16 +9,10 @@ public class Jardin {
 	private Entorno entorno;
 	private Estado estado;
 	private Reloj reloj;
-<<<<<<< HEAD
 	Rosa[] rosa;
 	Nuez [] nuez;
+	Chile[] chile;
 	BolaDeFuego[] bFuego;
-=======
-	private Rosa[] rosa;
-	private Nuez [] nuez;
-	private Chile[] chile;
-	private BolaDeFuego[] bFuego;
->>>>>>> 0d417b7 (chile (planta explosiva) añadida)
 	private Menu menu;
 	private Cripta cripta;
 	
@@ -545,8 +539,6 @@ public class Jardin {
 	    }
 	}
 
-	
-	
 	public void crearAbono() {
 		entorno.cambiarFont("Arial", 18, Color.CYAN);
 		entorno.escribirTexto("Abono total: " + abono, 1200, 100);
@@ -569,7 +561,6 @@ public class Jardin {
 		}
 	}
 	
-
 	public boolean hayPlantaEnPosicion(int x, int y) {
 	    for (int i = 0; i < rosa.length; i++) {
 	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) 
@@ -586,7 +577,6 @@ public class Jardin {
 	    return false;
 	}
 
-	
 	private int obtenerPosicionXMenor(int x) {
 		for(int i = 0; i < xs.length; i++) {
 			if(i == 0 && xs[i] == x) return x;

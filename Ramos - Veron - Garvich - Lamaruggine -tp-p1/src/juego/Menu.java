@@ -14,12 +14,9 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 	
 	boolean aRose = false;
 	boolean aNuez = false;
-<<<<<<< HEAD
 	int rosasPosibles;
 	int nuecesPosibles;
-=======
 	boolean aChile = false;
->>>>>>> 0d417b7 (chile (planta explosiva) añadida)
 	
 	public Menu(Entorno entorno, Estado estado) {
 		this.entorno = entorno;
@@ -153,8 +150,6 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 				if(entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO))
 					estado.setEstado(3);
 			}
-<<<<<<< HEAD
-=======
 
 			//reloj.mostrarTiempo(50, 650, 50);
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
@@ -175,7 +170,6 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			else
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chileSelected.png"), 470, 82, 0);
 			
->>>>>>> 0d417b7 (chile (planta explosiva) añadida)
 		}
 	}
 	public void contarTicks(boolean iniciar) {
