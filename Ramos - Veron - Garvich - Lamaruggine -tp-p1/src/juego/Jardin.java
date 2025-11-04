@@ -379,7 +379,7 @@ public class Jardin {
 			menu.aChile = false;
 		}
 		
-		if(420 <mX && mX < 520 && 20 < mY && mY < 145 && abono >= 120 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
+		if(420 <mX && mX < 520 && 20 < mY && mY < 145 && abono >= 100 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
 			aChile = true;
 			aRosa = false;
 			aNuez = false;
@@ -718,13 +718,27 @@ public class Jardin {
 		for(int i = 0; i < pociones.length; i++) {
 			int mX = entorno.mouseX();
 			int mY = entorno.mouseY();
-			if(pociones[i] != null && mouseEnPocion(pociones[i], mX, mY) && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
+			if(pociones[i] != null 
+					&& mouseEnPocion(pociones[i], mX, mY) 
+					&& entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)
+					&& !sePlantoEnUltimoClick) {
 				tiempoUltimaPocion = reloj.getTiempo();
 				if(pociones[i].esPositiva) efectoPositivo = true;
 				else efectoNegativo = true;
 				pociones[i] = null;
 			}
 		}
+	}
+
+	public void mostrarAbono(int tamanio, int posX, int posY) {
+		entorno.cambiarFont("Comic Sans MS", tamanio, Color.yellow);
+		entorno.escribirTexto("ABONO: " + abono, posX, posY);
+		if(efectoPositivo && tiempoUltimaPocion != 0 && reloj.getTiempo() - tiempoUltimaPocion < 10000)
+			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/efectoPositivo.png"), posX + 50, posY + 30, 0);
+		if(efectoNegativo && tiempoUltimaPocion != 0 && reloj.getTiempo() - tiempoUltimaPocion < 10000)
+			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/efectoNegativo.png"), posX + 50, posY + 30, 0);
+;
+
 	}
 	
 	private boolean mouseEnPocion(Pocion p, int mouseX, int mouseY) {

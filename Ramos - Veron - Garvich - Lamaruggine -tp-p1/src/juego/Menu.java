@@ -185,4 +185,5 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			cuantosTicks = entorno.numeroDeTick() - ticksFuera;
 		}
 	}
+	
 }
