@@ -276,32 +276,6 @@ public class Jardin {
 	    }
 	}
 
-/*	public void dibujarProyectiles() {
-		// Dibuja las bolas de fuego
-		for(int i = 0; i < bFuego.length; i++) {
-			BolaDeFuego b = bFuego[i];
-			if (b == null) continue;
-			b.desplazar();
-            entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeFuego.png"), b.posX, b.posY-35, 0);
-            
-			if (cripta.hayZombieEnPosicion(b.posX, b.posY)) {
-				cripta.herirZombieEnPosicion(b.posX, b.posY, b.damage, this);
-				bFuego[i] = null;
-				conteoBFuego --;
-			} else if(cripta.hayLapidaEnPosicion(b.posX, b.posY)) {
-				cripta.herirLapida(b.damage);
-				bFuego[i] = null;
-				conteoBFuego --;
-			}
-			if (b.posX > 1400) {
-				bFuego[i] = null;
-				conteoBFuego --;
-			}
-		}
-		
-		// También se deberían dibujar las bolas de nieve en este método
-	}*/
-	
 	public void spawnPlanta() {
 		int mX = entorno.mouseX();
 		int mY = entorno.mouseY();
@@ -526,15 +500,7 @@ public class Jardin {
 		}
 	}
 	
-/*	private void aumentarLengthBFuego() {
-		int length = (int) (bFuego.length * 1.5);
-		BolaDeFuego[] nuevo = new BolaDeFuego[length];
-		for (int i = 0; i < bFuego.length; i++) {
-			nuevo[i] = bFuego[i];
-		}
-		bFuego = nuevo;
-	}
-	*/
+
 	public boolean hayPlantaEnPosicion(int x, int y) {
 	    for (int i = 0; i < rosa.length; i++) {
 	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) 
