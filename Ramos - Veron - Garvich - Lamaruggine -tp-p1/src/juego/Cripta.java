@@ -353,6 +353,11 @@ public class Cripta {
 	                    			if (lapidas[i] == null) lapidas[i] = lapida;
 	                    		}
 	                    	}
+	                    } else if (random > 90) {
+	                    	Pocion pocion = new Pocion(reloj, ejeX, ejeY);
+	                    	for(int j = 0; j < jardin.pociones.length; j++) {
+	                    		if(jardin.pociones[j] == null) jardin.pociones[i] = pocion;
+	                    	}
 	                    }
 	                }
 	                return;

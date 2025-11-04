@@ -14,6 +14,7 @@ public class Jardin {
 	Chile[] chile;
 	BolaDeFuego[] bFuego;
 	BolaDeNieve[] bNieve;
+	Pocion[] pociones;
 	private Menu menu;
 	private Cripta cripta;
 	
@@ -58,6 +59,7 @@ public class Jardin {
 		this.chile = new Chile[20];
 		this.bFuego = new BolaDeFuego[100];
 		this.bNieve = new BolaDeNieve[100];
+		this.pociones = new Pocion[50];
 		
 		for(int i = 0; i < nuez.length; i++) {
 			nuez[i] = new Nuez();
@@ -183,6 +185,13 @@ public class Jardin {
 		else {
 		    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/regalo1.png"), 55, 706, 0);
 		}
+		}
+	}
+	
+	public void dibujarPociones() {
+		for(int i = 0; i < pociones.length; i++) {
+			if(pociones[i] == null) continue;
+			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/pocion.png"), pociones[i].posX, pociones[i].posY, 0);
 		}
 	}
 	

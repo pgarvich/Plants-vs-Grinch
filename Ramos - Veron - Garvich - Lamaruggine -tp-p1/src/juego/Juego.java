@@ -61,10 +61,10 @@ public class Juego extends InterfaceJuego
 			jardin.crearAbono();
 			combate.gestionarDisparos();
 			combate.dibujarProyectiles();
+			jardin.dibujarPociones();
 			cripta.mostrarZombiesVivos(18, 755, 135); 
 			cripta.mostrarZombiesEliminados(18, 762, 160);
 			reloj.mostrarTiempo(18, 730, 94);
-			
 		}
 		cripta.verZColosal();
 		combate.debilitamiento();
