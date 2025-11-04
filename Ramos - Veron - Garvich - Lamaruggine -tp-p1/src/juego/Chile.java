@@ -15,6 +15,8 @@ public class Chile {
 	int maxXExplosion;
 	int minYExplosion;
 	int maxYExplosion;
+	boolean explotando = false;
+	int contadorExplosion = 60;
 	
 	public Chile(Entorno entorno, Estado estado, Reloj reloj, int posX, int posY) {
 		super();

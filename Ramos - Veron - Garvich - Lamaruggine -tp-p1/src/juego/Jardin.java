@@ -211,6 +211,11 @@ public class Jardin {
 		                }             
 		            }
 		        }
+		        
+		        for(int i = 0; i < chile.length; i++) {
+		        	if(chile[i] == null) continue;
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+		        }
 		    }
 		 
 	    if(estado.esDerrota()) {
@@ -289,7 +294,14 @@ public class Jardin {
                 if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("chile")) {
                     Color marco = new Color(255, 255, 0, 100);
                     entorno.dibujarRectangulo(chile[i].posX, chile[i].posY, 125, 125, 0, marco);
+                } else if (chile[i].explotando) {
+                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/explosion.png"), chile[i].posX, chile[i].posY, 0);
+                    chile[i].contadorExplosion--;
+                    if (chile[i].contadorExplosion <= 0) {
+                        chile[i] = null;
+                    }
                 }
+
 	        }
 	    }
 	}

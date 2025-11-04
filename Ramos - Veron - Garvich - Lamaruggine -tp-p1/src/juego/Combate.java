@@ -111,11 +111,13 @@ public class Combate {
                        cripta.zBase[j].posX - jardin.chile[i].posX <= 80 && 
                        cripta.zBase[j].posX - jardin.chile[i].posX > 0) {
                         cripta.herirZombiesEnRango(jardin.chile[i], jardin);
-                        jardin.chile[i] = null;
+                        jardin.chile[i].explotando = true;
                         break;
                     }
                 }
             }
+        	
+        	if(jardin.chile[i] == null) continue;
         	
         	for(int j = 0; j < cripta.zAlter.length; j++) {
                 if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
@@ -123,7 +125,7 @@ public class Combate {
                        cripta.zAlter[j].posX - jardin.chile[i].posX <= 80 && 
                        cripta.zAlter[j].posX - jardin.chile[i].posX > 0) {
                         cripta.herirZombiesEnRango(jardin.chile[i], jardin);
-                        jardin.chile[i] = null;
+                        jardin.chile[i].explotando = true;
                         break;
                     }
                 }
