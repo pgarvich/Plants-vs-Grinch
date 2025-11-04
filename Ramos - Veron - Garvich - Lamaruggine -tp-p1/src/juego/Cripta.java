@@ -8,6 +8,7 @@ public class Cripta {
 	private Entorno entorno;
 	ZBase[] zBase;
 	ZAlter[] zAlter;
+	ZColosal zColosal;
 	private Lapida[] lapidas;
 	private Estado estado;
 	private Reloj reloj;
@@ -42,6 +43,8 @@ public class Cripta {
 				zAlter[i] = new ZAlter(this.estado);				
 			}
 		
+		this.zColosal = new ZColosal(this.estado);	
+			
 		this.lapidas = new Lapida[50];
 	}
 		
@@ -52,6 +55,32 @@ public class Cripta {
 	}
 	
 	public void zombiesVictoriosos() {
+	 
+		if(zColosal != null && zColosal.vivo) {					//dibujar zombie Colosal                      
+    	zColosal.derecha = true;
+    	zColosal.desplazar();
+    	if(!zColosal.zombieVictorioso) {
+			if(reloj.ciclos(500, 1000)) {
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/ZC3.png"), zColosal.posX, 500, 0);
+			}
+			else {
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/ZC4.png"), zColosal.posX, 500, 0);
+			}
+		}
+		else {
+			if(reloj.ciclos(500, 1000)) {
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/ZCV1.png"), zColosal.posX, 500, 0);
+			}
+			else {
+				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/ZCV2.png"), zColosal.posX, 480, 0);
+			}
+			regalo1 = false;
+			regalo2 = false;
+			regalo3 = false;
+			regalo4 = false;
+			regalo5 = false;
+		}
+    }
 	    
 		for(int i = 0; i < zBase.length; i++) {        //dibujar zombies base
 	        if (zBase[i] == null) 
@@ -119,6 +148,18 @@ public class Cripta {
 	    } 
 	} 
 	public void dibujarZombies() {
+		
+		 if(zColosal != null && zColosal.vivo) {								//dibujar zombie Colosal 
+			 zColosal.desplazar();
+			 zColosal.victoriaZombie();
+			 if(reloj.ciclos(500, 900)) {
+				 entorno.dibujarImagen(Herramientas.cargarImagen("personajes/ZC1.png"), zColosal.posX, 500, 0);
+			 }
+			 else {
+				 entorno.dibujarImagen(Herramientas.cargarImagen("personajes/ZC2.png"), zColosal.posX, 480, 0);
+			 }
+		 }
+		 
 	    for(int i = 0; i < zBase.length; i++) {        //dibujar zombies base
 	        if (zBase[i] == null) 
 	            continue;
@@ -226,6 +267,13 @@ public class Cripta {
 	    
 
 	}
+	    if(zombiesMuertos == 1 && !zColosal.vivo) {						//dentro de spawnZombies (liena 269)
+	    	zColosal.vivo = true;
+	    	zColosal.posX = 1600;
+	    	zColosal.posY = 400;
+	    	zombiesVivos += 0;
+	    	zColosal.derecha = false;	
+	    }	 
 	}	
 	
 	public void contarTicks(boolean iniciar) {
