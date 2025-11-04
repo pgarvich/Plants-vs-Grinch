@@ -1,7 +1,5 @@
 package juego;
 
-import java.awt.Color;
-
 import entorno.Entorno;
 import entorno.InterfaceJuego;
 
@@ -68,6 +66,7 @@ public class Juego extends InterfaceJuego
 			reloj.mostrarTiempo(18, 730, 94);
 			
 		}
+		cripta.verZColosal();
 		combate.debilitamiento();
 		jardin.dibujarRegalos();
 		jardin.victoriaPlanta();

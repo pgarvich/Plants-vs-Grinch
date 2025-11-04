@@ -53,7 +53,13 @@ public class Cripta {
 			estado.setEstado(5);
 		}
 	}
-	
+	public void verZColosal() {
+		if(estado.esJuego()) {
+			if(zColosal != null && zColosal.vida <= 0) {
+				zColosal = null;
+			}
+		}
+	}
 	public void zombiesVictoriosos() {
 	 
 		if(zColosal != null && zColosal.vivo) {					//dibujar zombie Colosal                      
@@ -267,7 +273,7 @@ public class Cripta {
 	    
 
 	}
-	    if(zombiesMuertos == 1 && !zColosal.vivo) {						//dentro de spawnZombies (liena 269)
+	    if(zombiesMuertos >= 25 && zColosal != null && !zColosal.vivo) {						//dentro de spawnZombies (liena 269)
 	    	zColosal.vivo = true;
 	    	zColosal.posX = 1600;
 	    	zColosal.posY = 400;

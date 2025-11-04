@@ -1,11 +1,7 @@
 package juego;
 
-import entorno.Entorno;
 
 public class Chile {
-	private Entorno entorno;
-	private Estado estado;
-	private Reloj reloj;
 	int posX;
 	int posY;
 	int vida = 100;
@@ -18,11 +14,9 @@ public class Chile {
 	boolean explotando = false;
 	int contadorExplosion = 60;
 	
-	public Chile(Entorno entorno, Estado estado, Reloj reloj, int posX, int posY) {
+	public Chile(int posX, int posY) {
 		super();
-		this.entorno = entorno;
-		this.estado = estado;
-		this.reloj = reloj;
+
 		this.posX = posX;
 		this.posY = posY;
 		calcularRangoExplosion();

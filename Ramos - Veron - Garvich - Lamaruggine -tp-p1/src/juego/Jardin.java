@@ -55,7 +55,7 @@ public class Jardin {
 		this.bFuego = new BolaDeFuego[100];
 		
 		for(int i = 0; i < nuez.length; i++) {
-			nuez[i] = new Nuez(this.entorno, this.estado, this.reloj);
+			nuez[i] = new Nuez();
 		}
 		
 		for(int i = 0; i < rosa.length; i++) {
@@ -182,7 +182,7 @@ public class Jardin {
 	}
 	
 	public void victoriaPlanta() {
-		if(cripta.zombiesMuertos == 50) {
+		if(cripta.zombiesMuertos == 50 && cripta.zColosal == null) {
 			estado.setEstado(5);
 		}
 	}
@@ -483,7 +483,7 @@ public class Jardin {
 			}
 			
 			if(aChile == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
-				Chile c = new Chile(entorno, estado, reloj, posibleX, posibleY);
+				Chile c = new Chile(posibleX, posibleY);
 				for (int i = 0; i < chile.length; i++) {
 					if(chile[i] == null) {
 						chile[i] = c;
@@ -544,7 +544,15 @@ public class Jardin {
 	            }
 	            
 	        }
-	    } else {
+	    } 
+	    else {
+	        if (!plantaExiste()) {
+	            moviendoPlanta = false;
+	            plantaSeleccionada = -1;
+	            tipoPlantaSeleccionada = "";
+	            return;
+	        }
+	        
 	        int curX = getPosX();
 	        int curY = getPosY();
 	        int nuevoX = curX;
@@ -598,7 +606,18 @@ public class Jardin {
 	        }
 	    }
 	}
-
+	private boolean plantaExiste() {
+	    if (plantaSeleccionada == -1) return false;
+	    
+	    if ("rosa".equals(tipoPlantaSeleccionada)) 
+	        return rosa[plantaSeleccionada] != null && rosa[plantaSeleccionada].vivo;
+	    if ("nuez".equals(tipoPlantaSeleccionada)) 
+	        return nuez[plantaSeleccionada] != null && nuez[plantaSeleccionada].vivo;
+	    if ("chile".equals(tipoPlantaSeleccionada)) 
+	        return chile[plantaSeleccionada] != null;
+	    
+	    return false;
+	}
 	public void crearAbono() {
 		contarTicks(false);
 		if(abono < 300 && cuantosTicks > 100) {
@@ -678,35 +697,35 @@ public class Jardin {
 	}
 
 	private int getPosX() {
-	    if ("rosa".equals(tipoPlantaSeleccionada)) 
+	    if ("rosa".equals(tipoPlantaSeleccionada) && rosa[plantaSeleccionada] != null) 
 	        return rosa[plantaSeleccionada].posX;
-	    if ("nuez".equals(tipoPlantaSeleccionada)) 
+	    if ("nuez".equals(tipoPlantaSeleccionada) && nuez[plantaSeleccionada] != null) 
 	        return nuez[plantaSeleccionada].posX;
-	    if ("chile".equals(tipoPlantaSeleccionada))
-	    	return chile[plantaSeleccionada].posX;
+	    if ("chile".equals(tipoPlantaSeleccionada) && chile[plantaSeleccionada] != null)
+	        return chile[plantaSeleccionada].posX;
 	    return 0;
 	}
 
 	private int getPosY() {
-	    if ("rosa".equals(tipoPlantaSeleccionada)) 
+	    if ("rosa".equals(tipoPlantaSeleccionada) && rosa[plantaSeleccionada] != null) 
 	        return rosa[plantaSeleccionada].posY;
-	    if ("nuez".equals(tipoPlantaSeleccionada)) 
+	    if ("nuez".equals(tipoPlantaSeleccionada) && nuez[plantaSeleccionada] != null) 
 	        return nuez[plantaSeleccionada].posY;
-	    if ("chile".equals(tipoPlantaSeleccionada)) 
+	    if ("chile".equals(tipoPlantaSeleccionada) && chile[plantaSeleccionada] != null) 
 	        return chile[plantaSeleccionada].posY;
 	    return 0;
 	}
 
 	private void setPos(int x, int y) {
-	    if ("rosa".equals(tipoPlantaSeleccionada)) {
+	    if ("rosa".equals(tipoPlantaSeleccionada) && rosa[plantaSeleccionada] != null) {
 	        rosa[plantaSeleccionada].posX = x;
 	        rosa[plantaSeleccionada].posY = y;
 	    }
-	    if ("nuez".equals(tipoPlantaSeleccionada)) {
+	    if ("nuez".equals(tipoPlantaSeleccionada) && nuez[plantaSeleccionada] != null) {
 	        nuez[plantaSeleccionada].posX = x;
 	        nuez[plantaSeleccionada].posY = y;
 	    }
-	    if ("chile".equals(tipoPlantaSeleccionada)) {
+	    if ("chile".equals(tipoPlantaSeleccionada) && chile[plantaSeleccionada] != null) {
 	        chile[plantaSeleccionada].posX = x;
 	        chile[plantaSeleccionada].posY = y;
 	    }
