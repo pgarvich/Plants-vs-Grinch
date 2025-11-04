@@ -45,6 +45,9 @@ public class Jardin {
 	boolean arribaPres = false;
 	boolean abajoPres = false;
 
+	boolean efectoPositivo = false;
+	boolean efectoNegativo = false;
+	int tiempoUltimaPocion = 0;
 	
 	
 	public Jardin(Entorno entorno, Estado estado, Reloj reloj, Menu menu, Cripta cripta) {
@@ -191,7 +194,8 @@ public class Jardin {
 	public void dibujarPociones() {
 		for(int i = 0; i < pociones.length; i++) {
 			if(pociones[i] == null) continue;
-			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/pocion.png"), pociones[i].posX, pociones[i].posY, 0);
+			if(reloj.getTiempo() - pociones[i].tiempoDeCreacion > 15000) pociones[i] = null;
+			else entorno.dibujarImagen(Herramientas.cargarImagen("personajes/pocion.png"), pociones[i].posX, pociones[i].posY, 0);
 		}
 	}
 	
@@ -461,6 +465,8 @@ public class Jardin {
 				}
 			}
 			
+			if (cripta.hayLapidaEnPosicion(posibleX, posibleY)) return;
+			
 			if(aRosa == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
 				rosa[conteoRosa].posX = posibleX;
 				rosa[conteoRosa].posY = posibleY;
@@ -607,7 +613,7 @@ public class Jardin {
 	            abajoPres = false;
 	        }
 
-	        if ((nuevoX != curX || nuevoY != curY) && !hayPlantaEnPosicion(nuevoX, nuevoY)) {
+	        if ((nuevoX != curX || nuevoY != curY) && !hayPlantaEnPosicion(nuevoX, nuevoY) && !cripta.hayLapidaEnPosicion(nuevoX, nuevoY)) {
 	            setPos(nuevoX, nuevoY);
 	        }
 
@@ -634,9 +640,16 @@ public class Jardin {
 	public void crearAbono() {
 		contarTicks(false);
 		if(abono < 300 && cuantosTicks > 100) {
-			abono += 15;
+			if(tiempoUltimaPocion != 0 && reloj.getTiempo() - tiempoUltimaPocion < 10000) {
+				System.out.println("abono con efecto");
+				abono += efectoPositivo ? 30 : 7;
+			}
+			else {
+				efectoPositivo = false;
+				efectoNegativo = false;
+				abono += 15;
+			}
 			contarTicks(true);
-			
 		}
 	}
 	public void contarTicks(boolean iniciar) {
@@ -699,6 +712,23 @@ public class Jardin {
 		        }
 	    }
 	    return false;
+	}
+	
+	public void verificarPociones() {
+		for(int i = 0; i < pociones.length; i++) {
+			int mX = entorno.mouseX();
+			int mY = entorno.mouseY();
+			if(pociones[i] != null && mouseEnPocion(pociones[i], mX, mY) && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
+				tiempoUltimaPocion = reloj.getTiempo();
+				if(pociones[i].esPositiva) efectoPositivo = true;
+				else efectoNegativo = true;
+				pociones[i] = null;
+			}
+		}
+	}
+	
+	private boolean mouseEnPocion(Pocion p, int mouseX, int mouseY) {
+		return Math.abs(p.posX - mouseX) <= 20 && Math.abs(p.posY - mouseY) <= 30;
 	}
 
 	private int obtenerPosicionXMenor(int x) {

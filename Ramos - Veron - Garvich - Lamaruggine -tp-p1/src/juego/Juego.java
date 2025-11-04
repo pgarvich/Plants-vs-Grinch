@@ -62,6 +62,7 @@ public class Juego extends InterfaceJuego
 			combate.gestionarDisparos();
 			combate.dibujarProyectiles();
 			jardin.dibujarPociones();
+			jardin.verificarPociones();
 			cripta.mostrarZombiesVivos(18, 755, 135); 
 			cripta.mostrarZombiesEliminados(18, 762, 160);
 			reloj.mostrarTiempo(18, 730, 94);
