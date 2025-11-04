@@ -137,6 +137,7 @@ public class Combate {
     public void gestionarDisparos() {
         if(!estado.esJuego()) return;
         
+        // Gestiona los disparos de las rosas
         for(int i = 0; i < jardin.rosa.length; i++) {
             Rosa r = jardin.rosa[i];
             if (r == null || !r.vivo) continue;
@@ -150,6 +151,46 @@ public class Combate {
                     if (jardin.bFuego[a] == null) {
                         jardin.bFuego[a] = bola;
                         jardin.conteoBFuego++;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        // Gestiona los disparos de los zombies base
+        for(int i = 0; i < cripta.zBase.length; i++) {
+        	ZBase z = cripta.zBase[i];
+        	if(z == null || !z.vivo) continue;
+        	
+        	if (z.puedeDisparar(reloj) && jardin.hayPlantaEnFila(z.posX, z.posY)) {
+                BolaDeNieve bola = new BolaDeNieve(entorno, estado, reloj, z.posX, z.posY);
+                if (jardin.conteoBNieve >= jardin.bNieve.length * 0.9) {
+                    aumentarLengthBNieve();
+                }
+                for(int j = 0; j < jardin.bNieve.length; j++) {
+                    if (jardin.bNieve[j] == null) {
+                        jardin.bNieve[j] = bola;
+                        jardin.conteoBNieve++;
+                        break;
+                    }
+                }
+            }
+        }
+        
+        // Disparos de zombies alter
+        for(int i = 0; i < cripta.zAlter.length; i++) {
+        	ZAlter z = cripta.zAlter[i];
+        	if(z == null || !z.vivo) continue;
+        	
+        	if (z.puedeDisparar(reloj) && jardin.hayPlantaEnFila(z.posX, z.posY)) {
+                BolaDeNieve bola = new BolaDeNieve(entorno, estado, reloj, z.posX, z.posY);
+                if (jardin.conteoBNieve >= jardin.bNieve.length * 0.9) {
+                    aumentarLengthBNieve();
+                }
+                for(int j = 0; j < jardin.bNieve.length; j++) {
+                    if (jardin.bNieve[j] == null) {
+                        jardin.bNieve[j] = bola;
+                        jardin.conteoBNieve++;
                         break;
                     }
                 }
@@ -179,6 +220,23 @@ public class Combate {
                 jardin.conteoBFuego--;
             }
         }
+        // dibuja las bolas de nieve
+        for(int i = 0; i < jardin.bNieve.length; i++) {
+        	BolaDeNieve b = jardin.bNieve[i];
+        	if(b == null) continue;
+        	b.desplazar();
+            entorno.dibujarImagen(Herramientas.cargarImagen("personajes/bolaDeNieve.png"), b.posX, b.posY, 0);
+            
+            if(jardin.hayPlantaEnPosicion(b.posX, b.posY)) {
+            	herirPlantaADisparar(b.damage);
+            	jardin.bNieve[i] = null;
+            	jardin.conteoBNieve--;
+            }
+            if(b.posX < 0) {
+            	jardin.bNieve[i] = null;
+            	jardin.conteoBNieve--;
+            }
+        }
     }
     
     // Método auxiliar para aumentar el array de bolas de fuego
@@ -190,4 +248,32 @@ public class Combate {
         }
         jardin.bFuego = nuevo;
     }
+    
+    // misma lógica para las bolas de nieve
+    public void aumentarLengthBNieve() {
+    	int length = (int) (jardin.bNieve.length * 1.5);
+    	BolaDeNieve[] nuevo = new BolaDeNieve[length];
+    	for (int i = 0; i < jardin.bNieve.length; i++) {
+    		nuevo[i] = jardin.bNieve[i];
+    	}
+    	jardin.bNieve = nuevo;
+    }
+    
+	public void herirPlantaADisparar(int damage) {
+		int i = jardin.indexPlantaADisparar;
+		String tipo = jardin.tipoPlantaADisparar;
+		if(i == -1) return;
+		else if(tipo == "rosa") {
+			jardin.rosa[i].vida -= damage;
+			if (jardin.rosa[i].vida <= 0) jardin.rosa[i].vivo = false;
+		}
+		else if(tipo == "nuez") {
+			jardin.nuez[i].vida -= damage;
+			if (jardin.nuez[i].vida <= 0) jardin.nuez[i].vivo = false;
+		}
+		else if(tipo == "chile") {
+			jardin.chile[i].vida -= damage;
+			if (jardin.chile[i].vida <= 0) jardin.chile[i] = null;
+		}
+	}
 }

@@ -8,6 +8,7 @@ public class ZAlter {
     int posX;
     int posY;
     int vida = 40;
+    int ultimoDisparo = 0;
     boolean detener = false;
     boolean zombieVictorioso = false;
     
@@ -35,4 +36,13 @@ public class ZAlter {
             zombieVictorioso = true;
         }
     }
+    
+    public boolean puedeDisparar(Reloj reloj) {
+		int actual = reloj.getTiempo();
+		if (actual - ultimoDisparo >= 2000 && !detener) {
+			ultimoDisparo = actual;
+			return true;
+		}
+		return false;
+	}
 }
