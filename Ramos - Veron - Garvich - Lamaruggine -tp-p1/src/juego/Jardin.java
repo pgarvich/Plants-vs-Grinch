@@ -22,6 +22,7 @@ public class Jardin {
 	boolean aRosa = false;
 	boolean aNuez = false;
 	boolean aChile = false;
+	boolean sePlantoEnUltimoClick = false;
 	int conteoRosa = 0;
 	int conteoNuez = 0;
 	int conteoBFuego = 0;
@@ -187,43 +188,43 @@ public class Jardin {
 	}
 	
 	public void dibujarPlantas() {
-		 if(estado.esVictoria()) {
-		        // Dibujar plantas en estado de derrota
-		        for(int i = 0; i < nuez.length; i++) {        
-		            if (nuez[i] == null) continue;
-		            if(nuez[i].vivo) {
-		                if (reloj.ciclos(300, 600)) {
-		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV1.png"), nuez[i].posX, nuez[i].posY, 0);
-		                }
-		                else {
-		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV2.png"), nuez[i].posX, nuez[i].posY, 0.1);
-		                }             
-		            }
-		        }
-		        
-		        for(int i = 0; i < rosa.length; i++) {        
-		            Rosa r = rosa[i];
-		            if (r == null) continue;
-		            if(r.vivo) {
-		                if (reloj.ciclos(300, 600)) {
-		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV1.png"), rosa[i].posX, rosa[i].posY, 0);
-		                } else {
-		                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV2.png"), rosa[i].posX, rosa[i].posY, 0);
-		                }             
-		            }
-		        }
-		        
-		        for(int i = 0; i < chile.length; i++) {
-		        	if(chile[i] == null) continue;
-		        	if(reloj.ciclos(300, 600)) {
-		        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
-		        }
-		        	else {
-		        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
-		        	}
-		        }
-		    }
-		 
+	    if(estado.esVictoria()) {
+	        // Dibujar plantas en estado de victoria
+	        for(int i = 0; i < nuez.length; i++) {        
+	            if (nuez[i] == null) continue;
+	            if(nuez[i].vivo) {
+	                if (reloj.ciclos(300, 600)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV1.png"), nuez[i].posX, nuez[i].posY, 0);
+	                }
+	                else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezV2.png"), nuez[i].posX, nuez[i].posY, 0.1);
+	                }             
+	            }
+	        }
+	        
+	        for(int i = 0; i < rosa.length; i++) {        
+	            Rosa r = rosa[i];
+	            if (r == null) continue;
+	            if(r.vivo) {
+	                if (reloj.ciclos(300, 600)) {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV1.png"), rosa[i].posX, rosa[i].posY, 0);
+	                } else {
+	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseV2.png"), rosa[i].posX, rosa[i].posY, 0);
+	                }             
+	            }
+	        }
+	        
+	        for(int i = 0; i < chile.length; i++) {
+	            if(chile[i] == null) continue;
+	            if(reloj.ciclos(300, 600)) {
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	            }
+	            else {
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
+	            }
+	        }
+	    }
+	     
 	    if(estado.esDerrota()) {
 	        // Dibujar plantas en estado de derrota
 	        for(int i = 0; i < nuez.length; i++) {        
@@ -251,16 +252,15 @@ public class Jardin {
 	        }
 	        
 	        for(int i = 0; i < chile.length; i++) {
-	        	if(chile[i] == null) continue;
-	        	if(reloj.ciclos(300, 600)) {
-	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
-	        }
-	        	else {
-	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
-	        	}
+	            if(chile[i] == null) continue;
+	            if(reloj.ciclos(300, 600)) {
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	            }
+	            else {
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
+	            }
 	        }
 	    }
-
 
 	    if(estado.esJuego()) {
 	        // Dibujar nueces durante el juego
@@ -273,52 +273,60 @@ public class Jardin {
 	                else {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuez1.png"), nuez[i].posX+5, nuez[i].posY-5, 0.1);
 	                }
-	                if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("nuez")) {
+	                if (!sePlantoEnUltimoClick && moviendoPlanta == true && i == plantaSeleccionada && tipoPlantaSeleccionada.equals("nuez")) {
 	                    Color marco = new Color(255, 255, 0, 100);
 	                    entorno.dibujarRectangulo(nuez[i].posX, nuez[i].posY, 125, 125, 0, marco);
 	                }
 	            }
 	        }
 
-	        // Dibujar rosas durante el juego (SOLO DIBUJO, sin lógica de disparo)
+	        // Dibujar rosas durante el juego
 	        for(int i = 0; i < rosa.length; i++) {
 	            Rosa r = rosa[i];
 	            if (r == null) continue;
 	            if(r.vivo) {
-	                // ELIMINAR TODO EL BLOQUE DE DISPARO - eso va a Combate
 	                if (reloj.ciclos(300, 600)) {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
 	                } else {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), rosa[i].posX, rosa[i].posY, 0);
 	                }             
 	            }
-	            if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("rosa")) {
+	            if (!sePlantoEnUltimoClick && moviendoPlanta == true && i == plantaSeleccionada && tipoPlantaSeleccionada.equals("rosa")) {
 	                Color marco = new Color(255, 255, 0, 100);
 	                entorno.dibujarRectangulo(r.posX, r.posY, 125, 125, 0, marco);
 	            }
 	        }
 	        
-	        //dibujar chiles
+	        // Dibujar chiles
 	        for(int i = 0; i < chile.length; i++) {
-	        	if(chile[i] == null) continue;
-	        	if(reloj.ciclos(300, 600)) {
-	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	            if(chile[i] == null) continue;
+	            
+	            // Animación del chile (tu versión)
+	            if(reloj.ciclos(300, 600)) {
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	            }
+	            else {
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
+	            }
+	            
+	            // Marco de selección
+	            if (!sePlantoEnUltimoClick && moviendoPlanta == true && i == plantaSeleccionada && tipoPlantaSeleccionada.equals("chile")) {
+	                Color marco = new Color(255, 255, 0, 100);
+	                entorno.dibujarRectangulo(chile[i].posX, chile[i].posY, 125, 125, 0, marco);
+	            }
+	            
+	            // Explosión
+	            if (chile[i].explotando) {
+	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/explosion.png"), chile[i].posX, chile[i].posY, 0);
+	                chile[i].contadorExplosion--;
+	                if (chile[i].contadorExplosion <= 0) {
+	                    moviendoPlanta = false;
+	                    chile[i] = null;
+	                }
+	            }
 	        }
-	        	else {
-	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
-	        	}
-                if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("chile")) {
-                    Color marco = new Color(255, 255, 0, 100);
-                    entorno.dibujarRectangulo(chile[i].posX, chile[i].posY, 125, 125, 0, marco);
-                } else if (chile[i].explotando) {
-                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/explosion.png"), chile[i].posX, chile[i].posY, 0);
-                    chile[i].contadorExplosion--;
-                    if (chile[i].contadorExplosion <= 0) {
-                        chile[i] = null;
-                    }
-                }
-
-	        }
+	        
+	        sePlantoEnUltimoClick = false;
 	    }
 	}
 
@@ -434,7 +442,11 @@ public class Jardin {
 				rosa[conteoRosa].vivo = true;
 				conteoRosa += 1;
 				abono -= 60;
-
+				sePlantoEnUltimoClick = true;
+				moviendoPlanta = false;
+			    plantaSeleccionada = -1;
+			    tipoPlantaSeleccionada = "";
+			    
 				if(abono < 60) {
 					aRosa = false;
 					menu.aRose = false;
@@ -447,7 +459,11 @@ public class Jardin {
 				nuez[conteoNuez].vivo = true;
 				conteoNuez += 1;
 				abono -= 40;
-
+				sePlantoEnUltimoClick = true;
+				moviendoPlanta = false;
+			    plantaSeleccionada = -1;
+			    tipoPlantaSeleccionada = "";
+			    
 				if(abono < 40) {
 					aNuez = false;
 					menu.aNuez = false;
@@ -460,6 +476,10 @@ public class Jardin {
 					if(chile[i] == null) {
 						chile[i] = c;
 						abono -= c.abonoN;
+						sePlantoEnUltimoClick = true;
+						moviendoPlanta = false;
+					    plantaSeleccionada = -1;
+					    tipoPlantaSeleccionada = "";
 						break;
 					}
 				}
@@ -484,7 +504,7 @@ public class Jardin {
 
 	            // Primero verificar rosas
 	            for (int i = 0; i < rosa.length; i++) {
-	                if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == posibleX && rosa[i].posY == posibleY) {
+	                if (!sePlantoEnUltimoClick && rosa[i] != null && rosa[i].vivo && rosa[i].posX == posibleX && rosa[i].posY == posibleY) {
 	                    plantaSeleccionada = i;
 	                    tipoPlantaSeleccionada = "rosa";
 	                    moviendoPlanta = true;
@@ -494,7 +514,7 @@ public class Jardin {
 	            
 	            // Luego verificar nueces
 	            for (int i = 0; i < nuez.length; i++) {
-	                if (nuez[i] != null && nuez[i].vivo && nuez[i].posX == posibleX && nuez[i].posY == posibleY) {
+	                if (!sePlantoEnUltimoClick && nuez[i] != null && nuez[i].vivo && nuez[i].posX == posibleX && nuez[i].posY == posibleY) {
 	                    plantaSeleccionada = i;
 	                    tipoPlantaSeleccionada = "nuez";
 	                    moviendoPlanta = true;
@@ -503,7 +523,7 @@ public class Jardin {
 	            }
 	            
 	            for(int i = 0; i < chile.length; i++) {
-	            	if (chile[i] != null && chile[i].posX == posibleX && chile[i].posY == posibleY) {
+	            	if (!sePlantoEnUltimoClick && chile[i] != null && chile[i].posX == posibleX && chile[i].posY == posibleY) {
 	            		plantaSeleccionada = i;
 	                    tipoPlantaSeleccionada = "chile";
 	                    moviendoPlanta = true;

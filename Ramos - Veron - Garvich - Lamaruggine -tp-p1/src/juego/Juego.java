@@ -56,6 +56,7 @@ public class Juego extends InterfaceJuego
 		if (estado.esJuego()) {
 			cripta.spawnZombies();
 			cripta.dibujarLapidas();
+			jardin.dibujarPlantas();
 			cripta.dibujarZombies();
 			jardin.spawnPlanta();
 			jardin.moverPlanta();
