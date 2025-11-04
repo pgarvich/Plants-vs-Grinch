@@ -26,7 +26,7 @@ public class Juego extends InterfaceJuego
 		// Inicializar lo que haga falta para el juego
 		this.estado = new Estado();
 		this.reloj = new Reloj(this.entorno, this.estado, 0);
-		this.menu = new Menu(this.entorno, this.estado, this.reloj);
+		this.menu = new Menu(this.entorno, this.estado);
 		this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
 		this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu, this.cripta);
 		

@@ -6,7 +6,6 @@ import entorno.Herramientas;
 public class Menu {				//se encarga de las funcionalidades del menú y del dibujo de este y de los fondos.
 	private Entorno entorno;
 	private Estado estado;
-	private Reloj reloj;
 	
 	int cuantosTicks = 0;
 	int ticksFuera = 0;
@@ -15,11 +14,12 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 	
 	boolean aRose = false;
 	boolean aNuez = false;
+	int rosasPosibles;
+	int nuecesPosibles;
 	
-	public Menu(Entorno entorno, Estado estado, Reloj reloj) {
+	public Menu(Entorno entorno, Estado estado) {
 		this.entorno = entorno;
 		this.estado = estado;
-		this.reloj = reloj; 
 	}
 
 	public boolean sobre(int masX, int menosX, int masY, int menosY) {
@@ -90,17 +90,55 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
 			entorno.dibujarImagen(Herramientas.cargarImagen("mapa/MenuSuperior9.png"), 700, 90, 0, 1);
-			
 			if(!aNuez)
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezBoton1.png"), 300, 82, 0);
 			else
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/nuezBoton2.png"), 300, 82, 0);
-
+			
+			if(nuecesPosibles >= 7) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/n7.png"), 300, 82, 0);
+			}
+			else if(nuecesPosibles >= 6) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/n6.png"), 300, 82, 0);
+			}
+			else if(nuecesPosibles >= 5) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/n5.png"), 300, 82, 0);
+			}
+			else if(nuecesPosibles >= 4) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/n4.png"), 300, 82, 0);
+			}
+			else if(nuecesPosibles >= 3) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/n3.png"), 300, 82, 0);
+			}
+			else if(nuecesPosibles >= 2) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/n2.png"), 300, 82, 0);
+			}
+			else if(nuecesPosibles >= 1) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/n1.png"), 300, 82, 0);
+			}
+			
 			if(!aRose)
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), 102, 82, 0);
 			
 			else
 				entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade2.png"), 102, 82, 0);
+			
+			if(rosasPosibles >= 5) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/r5.png"), 102, 82, 0);
+			}
+			else if(rosasPosibles >= 4) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/r4.png"), 102, 82, 0);
+			}
+			else if(rosasPosibles >= 3) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/r3.png"), 102, 82, 0);
+			}
+			else if(rosasPosibles >= 2) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/r2.png"), 102, 82, 0);
+			}
+			else if(rosasPosibles >= 1) {
+			    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/r1.png"), 102, 82, 0);
+			}
+			
 			if(!sobre(1038, 1263, 38, 122)) {
 				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Pausa.png"), 1150, 80, 0);
 			}

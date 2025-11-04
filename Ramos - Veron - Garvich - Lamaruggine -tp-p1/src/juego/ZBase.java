@@ -1,11 +1,8 @@
 package juego;
-import entorno.Entorno;
-import entorno.Herramientas;
+
 
 public class ZBase {
-    private Entorno entorno;
     private Estado estado;
-    private Reloj reloj;
     
     boolean vivo = false;
     boolean detener = false;
@@ -14,10 +11,8 @@ public class ZBase {
     int vida = 80;
     boolean zombieVictorioso = false;
     
-    public ZBase(Entorno entorno, Estado estado, Reloj reloj) {
-        this.entorno = entorno;
+    public ZBase(Estado estado) {
         this.estado = estado;
-        this.reloj = reloj;
     }
     
     public void desplazar() {

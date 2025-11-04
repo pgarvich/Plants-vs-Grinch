@@ -1,11 +1,8 @@
 package juego;
-import entorno.Entorno;
-import entorno.Herramientas;
+
 
 public class ZAlter {
-    private Entorno entorno;
     private Estado estado;
-    private Reloj reloj;
     
     boolean vivo = false;
     int posX;
@@ -14,10 +11,8 @@ public class ZAlter {
     boolean detener = false;
     boolean zombieVictorioso = false;
     
-    public ZAlter(Entorno entorno, Estado estado, Reloj reloj) {
-        this.entorno = entorno;
+    public ZAlter(Estado estado) {
         this.estado = estado;
-        this.reloj = reloj;
     }
     
     public void desplazar() {

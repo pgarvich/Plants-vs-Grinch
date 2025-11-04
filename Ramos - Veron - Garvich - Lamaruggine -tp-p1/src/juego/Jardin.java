@@ -26,8 +26,7 @@ public class Jardin {
 	int ticksFuera;
 	int cuantosTicks;
 	int regaloPerdido;
-	int rosasPosibles;
-	int nuecesPosibles;
+
 	
 	int plantaSeleccionada = -1;
 	String tipoPlantaSeleccionada = "";
@@ -59,6 +58,11 @@ public class Jardin {
 			rosa[i] = new Rosa(this.entorno, this.estado, this.reloj);
 		}
 	}
+	public void posiblesPlantas() {
+		menu.nuecesPosibles = abono / 40;
+		menu.rosasPosibles = abono / 60;
+	}
+	
 	
 	public void dibujarRegalos() {
 		if(estado.esDerrota()) {
@@ -396,6 +400,7 @@ public class Jardin {
 		int mY = entorno.mouseY();
 		int posibleX;
 		int posibleY;
+		posiblesPlantas();
 		
 		if(40 < mX && mX < 165 && 20 < mY && mY < 145 && abono >= 60 && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO)) {
 			aRosa = true;

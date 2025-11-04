@@ -33,13 +33,13 @@ public class Cripta {
 		this.zBase = new ZBase[40];
 		
 			for(int i = 0; i < zBase.length; i++) {
-				zBase[i] = new ZBase(this.entorno, this.estado, this.reloj);
+				zBase[i] = new ZBase(this.estado);
 			}
 		
 		this.zAlter = new ZAlter[10];
 		
 			for(int i = 0; i < zAlter.length; i++) {
-				zAlter[i] = new ZAlter(this.entorno, this.estado, this.reloj);				
+				zAlter[i] = new ZAlter(this.estado);				
 			}
 		
 		this.lapidas = new Lapida[50];
