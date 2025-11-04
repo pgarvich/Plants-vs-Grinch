@@ -9,9 +9,9 @@ public class Jardin {
 	private Entorno entorno;
 	private Estado estado;
 	private Reloj reloj;
-	private Rosa[] rosa;
-	private Nuez [] nuez;
-	private BolaDeFuego[] bFuego;
+	Rosa[] rosa;
+	Nuez [] nuez;
+	BolaDeFuego[] bFuego;
 	private Menu menu;
 	private Cripta cripta;
 	
@@ -177,94 +177,11 @@ public class Jardin {
 	}
 	
 	public void victoriaPlanta() {
-		if(cripta.zombiesMuertos == 5) {
+		if(cripta.zombiesMuertos == 50) {
 			estado.setEstado(5);
 		}
 	}
-	public void debilitamiento() {
-	    if(!estado.esJuego()) return;
-	    
-	    // Reiniciar todos los estados de detención primero
-	    for(int j = 0; j < cripta.zBase.length; j++) {
-	        if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
-	            cripta.zBase[j].detener = false;
-	        }
-	    }
-	    for(int j = 0; j < cripta.zAlter.length; j++) {
-	        if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
-	            cripta.zAlter[j].detener = false;
-	        }
-	    }
-	    
-	    // Ahora verificar colisiones
-	    for(int i = 0; i < nuez.length; i++) {        
-	        if (nuez[i] == null || !nuez[i].vivo) continue;
-	        
-	        for(int j = 0; j < cripta.zBase.length; j++) {
-	            if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
-	                if(Math.abs(cripta.zBase[j].posY - nuez[i].posY) < 30 && 
-	                   cripta.zBase[j].posX - nuez[i].posX <= 80 && 
-	                   cripta.zBase[j].posX - nuez[i].posX > 0) {
-	                    cripta.zBase[j].detener = true;
-	                    nuez[i].vida -= 1;
-	                    if(nuez[i].vida <= 0) {
-	                        nuez[i].vivo = false;
-	                    }
-	                }
-	            }
-	        }
-
-	        for(int j = 0; j < cripta.zAlter.length; j++) {
-	            if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
-	                if(Math.abs(cripta.zAlter[j].posY - nuez[i].posY) < 30 && 
-	                   cripta.zAlter[j].posX - nuez[i].posX <= 80 && 
-	                   cripta.zAlter[j].posX - nuez[i].posX > 0) {
-	                    cripta.zAlter[j].detener = true;
-	                    nuez[i].vida -= 1;
-	                    
-	                    if(nuez[i].vida <= 0) {
-	                        nuez[i].vivo = false;
-	                    }
-	                }
-	            }
-	        }
-	    }
-	    
-	    // Misma lógica para rosas
-	    for(int i = 0; i < rosa.length; i++) {        
-	        if (rosa[i] == null || !rosa[i].vivo) continue;
-	        
-	        for(int j = 0; j < cripta.zBase.length; j++) {
-	            if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
-	                if(Math.abs(cripta.zBase[j].posY - rosa[i].posY) < 30 && 
-	                   cripta.zBase[j].posX - rosa[i].posX <= 80 && 
-	                   cripta.zBase[j].posX - rosa[i].posX > 0) {
-	                    cripta.zBase[j].detener = true;
-	                    rosa[i].vida -= 1;
-	                    
-	                    if(rosa[i].vida <= 0) {
-	                        rosa[i].vivo = false;
-	                    }
-	                }
-	            }
-	        }
-
-	        for(int j = 0; j < cripta.zAlter.length; j++) {
-	            if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
-	                if(Math.abs(cripta.zAlter[j].posY - rosa[i].posY) < 30 && 
-	                   cripta.zAlter[j].posX - rosa[i].posX <= 80 && 
-	                   cripta.zAlter[j].posX - rosa[i].posX > 0) {
-	                    cripta.zAlter[j].detener = true;
-	                    rosa[i].vida -= 1;
-	                    
-	                    if(rosa[i].vida <= 0) {
-	                        rosa[i].vivo = false;
-	                    }
-	                }
-	            }
-	        }
-	    }
-	}
+	
 	public void dibujarPlantas() {
 		 if(estado.esVictoria()) {
 		        // Dibujar plantas en estado de derrota
@@ -339,22 +256,12 @@ public class Jardin {
 	            }
 	        }
 
-	        // Dibujar rosas durante el juego
+	        // Dibujar rosas durante el juego (SOLO DIBUJO, sin lógica de disparo)
 	        for(int i = 0; i < rosa.length; i++) {
 	            Rosa r = rosa[i];
 	            if (r == null) continue;
 	            if(r.vivo) {
-	                if (r.puedeDisparar() && cripta.hayZombieEnFila(r.posX, r.posY)) {
-	                    BolaDeFuego bola = rosa[i].disparar();
-	                    if (conteoBFuego >= bFuego.length * 0.9) aumentarLengthBFuego();
-	                    for(int a = 0; a < bFuego.length; a++) {
-	                        if (bFuego[a] == null) {
-	                            bFuego[a] = bola;
-	                            conteoBFuego ++;
-	                            break;
-	                        }
-	                    }
-	                }
+	                // ELIMINAR TODO EL BLOQUE DE DISPARO - eso va a Combate
 	                if (reloj.ciclos(300, 600)) {
 	                    entorno.dibujarImagen(Herramientas.cargarImagen("personajes/roseBlade1.png"), rosa[i].posX, rosa[i].posY, 0);
 	                } else {
@@ -369,7 +276,7 @@ public class Jardin {
 	    }
 	}
 
-	public void dibujarProyectiles() {
+/*	public void dibujarProyectiles() {
 		// Dibuja las bolas de fuego
 		for(int i = 0; i < bFuego.length; i++) {
 			BolaDeFuego b = bFuego[i];
@@ -393,7 +300,7 @@ public class Jardin {
 		}
 		
 		// También se deberían dibujar las bolas de nieve en este método
-	}
+	}*/
 	
 	public void spawnPlanta() {
 		int mX = entorno.mouseX();
@@ -619,7 +526,7 @@ public class Jardin {
 		}
 	}
 	
-	private void aumentarLengthBFuego() {
+/*	private void aumentarLengthBFuego() {
 		int length = (int) (bFuego.length * 1.5);
 		BolaDeFuego[] nuevo = new BolaDeFuego[length];
 		for (int i = 0; i < bFuego.length; i++) {
@@ -627,7 +534,7 @@ public class Jardin {
 		}
 		bFuego = nuevo;
 	}
-	
+	*/
 	public boolean hayPlantaEnPosicion(int x, int y) {
 	    for (int i = 0; i < rosa.length; i++) {
 	        if (rosa[i] != null && rosa[i].vivo && rosa[i].posX == x && rosa[i].posY == y) 

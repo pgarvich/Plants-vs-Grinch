@@ -14,27 +14,21 @@ public class Juego extends InterfaceJuego
 	private Cripta cripta;
 	private Menu menu;
 	private Jardin jardin;
+	private Combate combate;
 	// Variables y métodos propios de cada grupo
 	// ...
 	
-	Juego()
-	{
-		// Inicializa el objeto entorno
-		
-		this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 1400, 800);
-		
-		// Inicializar lo que haga falta para el juego
-		this.estado = new Estado();
-		this.reloj = new Reloj(this.entorno, this.estado, 0);
-		this.menu = new Menu(this.entorno, this.estado);
-		this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
-		this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu, this.cripta);
-		
-
-		
-
-		// Inicia el juego!
-		this.entorno.iniciar();
+	Juego() {
+	    this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 1400, 800);
+	    
+	    this.estado = new Estado();
+	    this.reloj = new Reloj(this.entorno, this.estado, 0);
+	    this.menu = new Menu(this.entorno, this.estado);
+	    this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
+	    this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu, this.cripta);
+ 	    this.combate = new Combate(this.entorno, this.jardin, this.cripta, this.estado, this.reloj);
+	    
+	    this.entorno.iniciar();
 	}
 
 	/**
@@ -66,13 +60,14 @@ public class Juego extends InterfaceJuego
 			jardin.spawnPlanta();
 			jardin.moverPlanta();
 			jardin.crearAbono();
-			jardin.dibujarProyectiles();
+			combate.gestionarDisparos();
+			combate.dibujarProyectiles();
 			cripta.mostrarZombiesVivos(18, 755, 135); 
 			cripta.mostrarZombiesEliminados(18, 762, 160);
 			reloj.mostrarTiempo(18, 730, 94);
 			
 		}
-		jardin.debilitamiento();
+		combate.debilitamiento();
 		jardin.dibujarRegalos();
 		jardin.victoriaPlanta();
 		if(estado.esDerrota()) {
