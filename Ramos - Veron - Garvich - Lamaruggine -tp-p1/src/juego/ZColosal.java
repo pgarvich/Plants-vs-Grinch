@@ -1,6 +1,5 @@
 package juego;
-import entorno.Entorno;
-import entorno.Herramientas;
+
 
 	public class ZColosal {
 		private Estado estado;
@@ -8,7 +7,7 @@ import entorno.Herramientas;
 		boolean vivo = false;
 		double posX;
 		int posY;
-		int vida = 10;
+		int vida = 1000;
 		boolean derecha = false;
 		boolean zombieVictorioso = false;
 		

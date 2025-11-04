@@ -32,17 +32,28 @@ public class Combate {
         
         // Ahora verificar colisiones
         for(int i = 0; i < jardin.nuez.length; i++) {        
-            if (jardin.nuez[i] == null || !jardin.nuez[i].vivo) continue;
+            if (jardin.nuez[i] == null) continue;
+            
+            if(cripta.zColosal != null && cripta.zColosal.vivo) {
+                if(Math.abs(cripta.zColosal.posX - jardin.nuez[i].posX) <= 150 && 
+                   Math.abs(cripta.zColosal.posY - jardin.nuez[i].posY) < 250) {
+                    jardin.nuez[i].vida -= 2; // Más daño del ZColosal
+                    if(jardin.nuez[i].vida <= 0) {
+                        jardin.nuez[i] = null;
+                    }
+                }
+            }
             
             for(int j = 0; j < cripta.zBase.length; j++) {
                 if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
+                	if(jardin.nuez[i] == null) continue;
                     if(Math.abs(cripta.zBase[j].posY - jardin.nuez[i].posY) < 30 && 
                        cripta.zBase[j].posX - jardin.nuez[i].posX <= 80 && 
                        cripta.zBase[j].posX - jardin.nuez[i].posX > 0) {
                         cripta.zBase[j].detener = true;
                         jardin.nuez[i].vida -= 1;
                         if(jardin.nuez[i].vida <= 0) {
-                            jardin.nuez[i].vivo = false;
+                            jardin.nuez[i] = null;
                         }
                     }
                 }
@@ -50,6 +61,7 @@ public class Combate {
 
             for(int j = 0; j < cripta.zAlter.length; j++) {
                 if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
+                	if(jardin.nuez[i] == null) continue;
                     if(Math.abs(cripta.zAlter[j].posY - jardin.nuez[i].posY) < 30 && 
                        cripta.zAlter[j].posX - jardin.nuez[i].posX <= 80 && 
                        cripta.zAlter[j].posX - jardin.nuez[i].posX > 0) {
@@ -57,7 +69,7 @@ public class Combate {
                         jardin.nuez[i].vida -= 1;
                         
                         if(jardin.nuez[i].vida <= 0) {
-                            jardin.nuez[i].vivo = false;
+                            jardin.nuez[i] = null;
                         }
                     }
                 }
@@ -66,10 +78,22 @@ public class Combate {
         
         // Misma lógica para rosas
         for(int i = 0; i < jardin.rosa.length; i++) {        
-            if (jardin.rosa[i] == null || !jardin.rosa[i].vivo) continue;
+            if (jardin.rosa[i] == null) continue;
+            
+            if(cripta.zColosal != null && cripta.zColosal.vivo) {
+                if(Math.abs(cripta.zColosal.posX - jardin.rosa[i].posX) <= 150 && 
+                   Math.abs(cripta.zColosal.posY - jardin.rosa[i].posY) < 250) {
+                    jardin.rosa[i].vida -= 2; // Más daño del ZColosal
+                    if(jardin.rosa[i].vida <= 0) {
+                        jardin.rosa[i] = null;
+                    }
+                }
+            }
+            
             
             for(int j = 0; j < cripta.zBase.length; j++) {
                 if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
+                	if(jardin.rosa[i] == null) continue;
                     if(Math.abs(cripta.zBase[j].posY - jardin.rosa[i].posY) < 30 && 
                        cripta.zBase[j].posX - jardin.rosa[i].posX <= 80 && 
                        cripta.zBase[j].posX - jardin.rosa[i].posX > 0) {
@@ -77,7 +101,7 @@ public class Combate {
                         jardin.rosa[i].vida -= 1;
                         
                         if(jardin.rosa[i].vida <= 0) {
-                            jardin.rosa[i].vivo = false;
+                            jardin.rosa[i] = null;
                         }
                     }
                 }
@@ -85,6 +109,7 @@ public class Combate {
 
             for(int j = 0; j < cripta.zAlter.length; j++) {
                 if(cripta.zAlter[j] != null && cripta.zAlter[j].vivo) {
+                	if(jardin.rosa[i] == null) continue;
                     if(Math.abs(cripta.zAlter[j].posY - jardin.rosa[i].posY) < 30 && 
                        cripta.zAlter[j].posX - jardin.rosa[i].posX <= 80 && 
                        cripta.zAlter[j].posX - jardin.rosa[i].posX > 0) {
@@ -103,6 +128,14 @@ public class Combate {
         for(int i = 0; i < jardin.chile.length; i++) {
         	if(jardin.chile[i] == null) continue;
         	
+        	if(cripta.zColosal != null && cripta.zColosal.vivo) {
+        		if(Math.abs(cripta.zColosal.posX - jardin.chile[i].posX) <= 150 && 
+        	               Math.abs(cripta.zColosal.posY - jardin.chile[i].posY) < 250) {
+        			cripta.herirZombiesEnRango(jardin.chile[i], jardin);
+                    jardin.chile[i].explotando = true;
+                    break;
+        		}
+        	}
         	for(int j = 0; j < cripta.zBase.length; j++) {
                 if(cripta.zBase[j] != null && cripta.zBase[j].vivo) {
                     if(Math.abs(cripta.zBase[j].posY - jardin.chile[i].posY) < 30 && 

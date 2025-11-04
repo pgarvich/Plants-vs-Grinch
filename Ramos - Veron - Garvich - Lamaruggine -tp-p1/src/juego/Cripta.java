@@ -289,6 +289,12 @@ public class Cripta {
 	}
 	
 	public boolean hayZombieEnPosicion(int x, int y) {
+	    if (zColosal != null && zColosal.vivo) {
+	        if (Math.abs(zColosal.posX - x) < 100 && Math.abs(zColosal.posY - y) < 200) {
+	            return true;
+	        }
+	    }
+	    
 	    for (int i = 0; i < zBase.length; i++) {
 	        if (zBase[i] != null && zBase[i].vivo) {
 	            if (Math.abs(zBase[i].posX - x) < 30 && Math.abs(zBase[i].posY - y) < 30) {
@@ -307,6 +313,18 @@ public class Cripta {
 	}
 
 	public void herirZombieEnPosicion(int x, int y, int damage, Jardin jardin) {
+	    // Verificar ZColosal primero
+	    if (zColosal != null && zColosal.vivo) {
+	        if (Math.abs(zColosal.posX - x) < 100 && Math.abs(zColosal.posY - y) < 200) {
+	            zColosal.vida -= damage;
+	            if (zColosal.vida <= 0) {
+	                zColosal.vivo = false;
+	                zombiesMuertos++;
+	            }
+	            return;
+	        }
+	    }
+		
 	    for (int i = 0; i < zBase.length; i++) {
 	        if (zBase[i] != null && zBase[i].vivo) {
 	            if (Math.abs(zBase[i].posX - x) < 30 && Math.abs(zBase[i].posY - y) < 30) {
@@ -356,6 +374,17 @@ public class Cripta {
 		int minY = chile.minYExplosion;
 		int maxY = chile.maxYExplosion;
 		
+	    if(zColosal != null && zColosal.vivo) {
+	        if(zColosal.posX < maxX && zColosal.posX > minX && 
+	           zColosal.posY < maxY && zColosal.posY > minY) {
+	            zColosal.vida -= chile.damage;
+	            if(zColosal.vida <= 0) {
+	                zColosal.vivo = false;
+	                zombiesMuertos++;
+	            }
+	        }
+	    }
+		
 		for(int i = 0; i < zBase.length; i++) {
 			if(zBase[i] == null || !zBase[i].vivo) continue;
 			if(zBase[i].posX < maxX && zBase[i].posX > minX && zBase[i].posY < maxY && zBase[i].posY > minY) {
@@ -368,6 +397,7 @@ public class Cripta {
 				herirZombieEnPosicion(zAlter[i].posX, zAlter[i].posY, chile.damage, jardin);
 			}
 		}
+		chile = null;
 	}
 	
 	public void herirLapida(int damage) {
@@ -377,6 +407,10 @@ public class Cripta {
 	}
 
 	public boolean hayZombieEnFila(int posX, int posY) {
+	    if (zColosal != null && zColosal.vivo && zColosal.posX > posX) {
+	        return true;
+	    }
+	    
 	    for (int i = 0; i < zBase.length; i++) {
 	        if (zBase[i] != null && zBase[i].vivo 
 	            && Math.abs(zBase[i].posY - posY) < 30

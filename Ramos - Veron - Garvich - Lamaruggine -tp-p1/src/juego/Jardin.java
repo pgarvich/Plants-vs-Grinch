@@ -186,7 +186,15 @@ public class Jardin {
 			estado.setEstado(5);
 		}
 	}
-	
+	/*public void hacerNull() {
+		for(int i = 0; i < nuez.length; i ++) {
+			if(nuez[i] != null) {
+				if(nuez[i].vivo && nuez[i].vida <= 0) {
+					nuez[i] = null;
+				}
+			}
+		}
+	}*/
 	public void dibujarPlantas() {
 	    if(estado.esVictoria()) {
 	        // Dibujar plantas en estado de victoria
@@ -427,13 +435,17 @@ public class Jardin {
 			}
 			
 			for(int i = 0; i < rosa.length; i++){
-				if((rosa[i].posX == posibleX && rosa[i].posY == posibleY) || (nuez[i].posX == posibleX && nuez[i].posY == posibleY)) {
-					return;
+				if(rosa[i] != null && nuez[i] != null) {
+					if((rosa[i].posX == posibleX && rosa[i].posY == posibleY) || (nuez[i].posX == posibleX && nuez[i].posY == posibleY)) {
+						return;
+					}
 				}
 			}
 			
 			for(int i = 0; i < chile.length; i++) {
-				if(chile[i] != null && chile[i].posX == posibleX && chile[i].posY == posibleY) return;
+				if(chile[i] != null) {
+					if(chile[i] != null && chile[i].posX == posibleX && chile[i].posY == posibleY) return;
+				}
 			}
 			
 			if(aRosa == true && entorno.sePresionoBoton(entorno.BOTON_IZQUIERDO) && mY >= 170) {
