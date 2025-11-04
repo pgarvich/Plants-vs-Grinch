@@ -6,14 +6,12 @@ public class Combate {
     private Jardin jardin;
     private Cripta cripta;
     private Estado estado;
-    private Reloj reloj;
     private Entorno entorno;
     
-    public Combate(Entorno entorno, Jardin jardin, Cripta cripta, Estado estado, Reloj reloj) {
+    public Combate(Entorno entorno, Jardin jardin, Cripta cripta, Estado estado) {
         this.jardin = jardin;
         this.cripta = cripta;
         this.estado = estado;
-        this.reloj = reloj;
         this.entorno = entorno; // Necesitamos el entorno para dibujar
     }
     

@@ -64,6 +64,7 @@ public class Jardin {
 	public void posiblesPlantas() {
 		menu.nuecesPosibles = abono / 40;
 		menu.rosasPosibles = abono / 60;
+		menu.chilesPosibles = abono / 100;
 	}
 	
 	

@@ -10,7 +10,7 @@ public class Chile {
 	int posY;
 	int vida = 100;
 	int damage = 300;
-	int abonoN = 120;
+	int abonoN = 100;
 	int minXExplosion;
 	int maxXExplosion;
 	int minYExplosion;
