@@ -215,7 +215,12 @@ public class Jardin {
 		        
 		        for(int i = 0; i < chile.length; i++) {
 		        	if(chile[i] == null) continue;
-	                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+		        	if(reloj.ciclos(300, 600)) {
+		        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+		        }
+		        	else {
+		        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
+		        	}
 		        }
 		    }
 		 
@@ -247,7 +252,12 @@ public class Jardin {
 	        
 	        for(int i = 0; i < chile.length; i++) {
 	        	if(chile[i] == null) continue;
-                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	        	if(reloj.ciclos(300, 600)) {
+	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	        }
+	        	else {
+	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
+	        	}
 	        }
 	    }
 
@@ -291,7 +301,12 @@ public class Jardin {
 	        //dibujar chiles
 	        for(int i = 0; i < chile.length; i++) {
 	        	if(chile[i] == null) continue;
-                entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	        	if(reloj.ciclos(300, 600)) {
+	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), chile[i].posX, chile[i].posY, 0);
+	        }
+	        	else {
+	        		entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile2.png"), chile[i].posX, chile[i].posY, 0);
+	        	}
                 if (i == plantaSeleccionada && tipoPlantaSeleccionada.equals("chile")) {
                     Color marco = new Color(255, 255, 0, 100);
                     entorno.dibujarRectangulo(chile[i].posX, chile[i].posY, 125, 125, 0, marco);
@@ -553,8 +568,6 @@ public class Jardin {
 	}
 
 	public void crearAbono() {
-		entorno.cambiarFont("Arial", 18, Color.CYAN);
-		entorno.escribirTexto("Abono total: " + abono, 1200, 100);
 		contarTicks(false);
 		if(abono < 300 && cuantosTicks > 100) {
 			abono += 15;
