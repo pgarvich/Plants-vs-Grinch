@@ -6,8 +6,6 @@ import entorno.Entorno;
 
 public class Reloj {
 
-	private Entorno entorno;
-	private Estado estado;
 	int segundos = 0;
 	int minutos = 0;
 	int milisegundos = 0;
@@ -17,9 +15,7 @@ public class Reloj {
 	int enPausa = 0;
 	int cero100 = 0;
 	
-	public Reloj(Entorno entorno, Estado estado, int enJuego) {
-		this.entorno = entorno;
-		this.estado = estado;
+	public Reloj(int enJuego) {
 		this.enJuego = enJuego;
 	}
 
@@ -28,7 +24,7 @@ public class Reloj {
 		return (resto < indice);
 	}
 	
-	public void tiempoObjeto(boolean iniciar, boolean parar, boolean continuar, boolean correr) {
+	public void tiempoObjeto(Entorno entorno, boolean iniciar, boolean parar, boolean continuar, boolean correr) {
 		if(iniciar)
 			fueraDeJuego = entorno.tiempo();
 		if(parar)
@@ -41,7 +37,7 @@ public class Reloj {
 			enJuego = entorno.tiempo() - fueraDeJuego;
 	}
 	
-	public void mostrarTiempo(int tamanio, int posX, int posY){
+	public void mostrarTiempo(Entorno entorno, int tamanio, int posX, int posY){
 		int segundos = (enJuego / 1000) % 60;
 		int minutos = enJuego / 60000;
 		//int decimas = enJuego % 100;

@@ -4,7 +4,6 @@ import entorno.Entorno;
 import entorno.Herramientas;
 
 public class Menu {				//se encarga de las funcionalidades del menú y del dibujo de este y de los fondos.
-	private Entorno entorno;
 	private Estado estado;
 	
 	int cuantosTicks = 0;
@@ -19,12 +18,12 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 	int chilesPosibles;
 	boolean aChile = false;
 	
-	public Menu(Entorno entorno, Estado estado) {
-		this.entorno = entorno;
+
+	public Menu(Estado estado) {
 		this.estado = estado;
 	}
 
-	public boolean sobre(int masX, int menosX, int masY, int menosY) {
+	public boolean sobre(Entorno entorno, int masX, int menosX, int masY, int menosY) {
 		int mX = entorno.mouseX();
 		int mY = entorno.mouseY();
 		if(mX >= masX && mX <= menosX && mY >= masY && mY <= menosY) {
@@ -32,12 +31,13 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 		}
 		else {
 			return false;
-	}
+		}
 	}
 
-	public void dibujarMenu() {
+
+	public void dibujarMenu(Entorno entorno) {
 		if(estado.esInicio()) {
-			if(!sobre(680, 910, 610, 710)) {
+			if(!sobre(entorno, 680, 910, 610, 710)) {
 				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Portada.png"), 700, 400, 0);
 			}
 			else {
@@ -66,8 +66,9 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			
 			entorno.dibujarImagen(Herramientas.cargarImagen("personajes/chile.png"), 470, 82, 0);
 		}
+		
 		if(estado.esPausa()) {
-			if(!sobre(700, 1369, 580, 760)) {
+			if(!sobre(entorno, 700, 1369, 580, 760)) {
 				entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Refrigerio.png"), 700, 400, 0);
 			}
 			else {
@@ -76,18 +77,19 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 						contar = true;
 				if(contar) {
 					contar = false;
-					contarTicks(true);
+					contarTicks(entorno, true);
 					cortar = true;
 				}
 				if(cortar) {
-					contarTicks(false);
-						if(cuantosTicks >= 20) {
-							cortar = false;
-							estado.setEstado(2);
-						}
+					contarTicks(entorno, false);
+					if(cuantosTicks >= 20) {
+						cortar = false;
+						estado.setEstado(2);
 					}
 				}
 			}
+		}
+		
 		if(estado.esJuego()) {
 		    // Dibujar fondos (solo una vez cada uno)
 		    entorno.dibujarImagen(Herramientas.cargarImagen("mapa/pasto1.png"), 700, 400, 0);
@@ -164,7 +166,7 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 		    }
 		    
 		    // 3. DIBUJAR BOTÓN DE PAUSA (último, para que esté encima de todo)
-		    if(!sobre(1038, 1263, 38, 122)) {
+		    if(!sobre(entorno, 1038, 1263, 38, 122)) {
 		        entorno.dibujarImagen(Herramientas.cargarImagen("mapa/Pausa.png"), 1150, 80, 0);
 		    }
 		    else {
@@ -174,7 +176,8 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 		    }
 		}
 	}
-	public void contarTicks(boolean iniciar) {
+	
+	public void contarTicks(Entorno entorno, boolean iniciar) {
 		if(entorno == null) {
 			return;
 		}
@@ -185,5 +188,4 @@ public class Menu {				//se encarga de las funcionalidades del menú y del dibuj
 			cuantosTicks = entorno.numeroDeTick() - ticksFuera;
 		}
 	}
-	
 }

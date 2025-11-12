@@ -196,7 +196,7 @@ public class Combate {
         	if(z == null || !z.vivo) continue;
         	
         	if (z.puedeDisparar(reloj) && jardin.hayPlantaEnFila(z.posX, z.posY)) {
-                BolaDeNieve bola = new BolaDeNieve(entorno, estado, reloj, z.posX, z.posY);
+                BolaDeNieve bola = new BolaDeNieve(estado, reloj, z.posX, z.posY);
                 if (jardin.conteoBNieve >= jardin.bNieve.length * 0.9) {
                     aumentarLengthBNieve();
                 }
@@ -216,7 +216,7 @@ public class Combate {
         	if(z == null || !z.vivo) continue;
         	
         	if (z.puedeDisparar(reloj) && jardin.hayPlantaEnFila(z.posX, z.posY)) {
-                BolaDeNieve bola = new BolaDeNieve(entorno, estado, reloj, z.posX, z.posY);
+                BolaDeNieve bola = new BolaDeNieve(estado, reloj, z.posX, z.posY);
                 if (jardin.conteoBNieve >= jardin.bNieve.length * 0.9) {
                     aumentarLengthBNieve();
                 }

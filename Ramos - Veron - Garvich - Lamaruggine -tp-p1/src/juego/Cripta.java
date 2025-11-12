@@ -348,7 +348,7 @@ public class Cripta {
 	                    	int posibleX = calcularPosibleX(ejeX);
 	                    	int posibleY = calcularPosibleY(ejeY);
 	                    	if(!hayLapidaEnPosicion(posibleX, posibleY) && !jardin.hayPlantaEnPosicion(posibleX, posibleY)) {
-	                    		Lapida lapida = new Lapida(entorno, estado, reloj, posibleX, posibleY, 1);
+	                    		Lapida lapida = new Lapida(posibleX, posibleY, 1);
 	                    		for(int a = 0; a < lapidas.length; a++) {
 	                    			if (lapidas[i] == null) lapidas[i] = lapida;
 	                    		}

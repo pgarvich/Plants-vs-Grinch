@@ -7,7 +7,7 @@ package juego;
 		boolean vivo = false;
 		double posX;
 		int posY;
-		int vida = 1000;
+		int vida = 5000;
 		boolean derecha = false;
 		boolean zombieVictorioso = false;
 		
@@ -17,7 +17,7 @@ package juego;
 	}
 		public void desplazar() {
 			if(!derecha)
-				posX -= 0.2; // mover 1 pixel por tick hacia la izquierda
+				posX -= 0.4; 
 			else
 				posX += 1;
 		}

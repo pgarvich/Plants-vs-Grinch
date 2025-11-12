@@ -3,7 +3,6 @@ package juego;
 import entorno.Entorno;
 
 public class Rosa {
-	private Entorno entorno;
 	private Estado estado;
 	private Reloj reloj;
 	
@@ -14,14 +13,14 @@ public class Rosa {
 	int abonoN = 60;
 	int ultimoDisparo = 0;
 	
-	public Rosa(Entorno entorno, Estado estado, Reloj reloj) {
-		this.entorno = entorno;
+	public Rosa(Estado estado, Reloj reloj) {
+
 		this.estado = estado;
 		this.reloj = reloj;
 	}
 	
 	public BolaDeFuego disparar() {
-		return new BolaDeFuego(entorno, estado, reloj, this);
+		return new BolaDeFuego(estado, reloj, this);
 	}
 	
 	public boolean puedeDisparar() {

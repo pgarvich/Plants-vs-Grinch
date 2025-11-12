@@ -20,8 +20,8 @@ public class Juego extends InterfaceJuego
 	    this.entorno = new Entorno(this, "La Invasión de los Zombies Grinch", 1400, 800);
 	    
 	    this.estado = new Estado();
-	    this.reloj = new Reloj(this.entorno, this.estado, 0);
-	    this.menu = new Menu(this.entorno, this.estado);
+	    this.reloj = new Reloj(0);
+	    this.menu = new Menu(this.estado);
 	    this.cripta = new Cripta(this.entorno, this.estado, this.reloj);
 	    this.jardin = new Jardin(this.entorno, this.estado, this.reloj, this.menu, this.cripta);
  	    this.combate = new Combate(this.entorno, this.jardin, this.cripta, this.estado, this.reloj);
@@ -37,17 +37,17 @@ public class Juego extends InterfaceJuego
 	 */
 	public void tick(){
 		// Procesamiento de un instante de tiempo
-		menu.dibujarMenu();
+		menu.dibujarMenu(this.entorno);
 		
 		////////////////////////////GESTION DEL RELOJ///////////////////////////////////////
 		if(estado.esJuego() && estado.estadoAnterior == 1)
-			reloj.tiempoObjeto(true, false, false, false);
+			reloj.tiempoObjeto(this.entorno, true, false, false, false);
 		if(estado.esPausa() && estado.estadoAnterior == 2)
-			reloj.tiempoObjeto(false, true, false, false);
+			reloj.tiempoObjeto(this.entorno,false, true, false, false);
 		if(estado.esJuego() && estado.estadoAnterior == 3)
-			reloj.tiempoObjeto(false, false, true, false);
+			reloj.tiempoObjeto(this.entorno, false, false, true, false);
 		if(estado.esJuego() || estado.esDerrota() || estado.esVictoria())
-			reloj.tiempoObjeto(false, false, false, true);
+			reloj.tiempoObjeto(this.entorno, false, false, false, true);
 		estado.estadoAnterior = estado.getEstado();	
 		////////////////////////////////////////////////////////////////////////////////////
 		jardin.dibujarPlantas();
@@ -65,7 +65,7 @@ public class Juego extends InterfaceJuego
 			jardin.verificarPociones();
 			cripta.mostrarZombiesVivos(18, 755, 135); 
 			cripta.mostrarZombiesEliminados(18, 762, 160);
-			reloj.mostrarTiempo(18, 730, 94);
+			reloj.mostrarTiempo(this.entorno, 18, 730, 94);
 			jardin.mostrarAbono(18, 860, 94);
 		}
 		cripta.verZColosal();

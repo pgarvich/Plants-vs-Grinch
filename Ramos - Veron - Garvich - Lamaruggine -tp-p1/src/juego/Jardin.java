@@ -69,7 +69,7 @@ public class Jardin {
 		}
 		
 		for(int i = 0; i < rosa.length; i++) {
-			rosa[i] = new Rosa(this.entorno, this.estado, this.reloj);
+			rosa[i] = new Rosa(this.estado, this.reloj);
 		}
 	}
 	public void posiblesPlantas() {
@@ -204,15 +204,7 @@ public class Jardin {
 			estado.setEstado(5);
 		}
 	}
-	/*public void hacerNull() {
-		for(int i = 0; i < nuez.length; i ++) {
-			if(nuez[i] != null) {
-				if(nuez[i].vivo && nuez[i].vida <= 0) {
-					nuez[i] = null;
-				}
-			}
-		}
-	}*/
+
 	public void dibujarPlantas() {
 	    if(estado.esVictoria()) {
 	        // Dibujar plantas en estado de victoria
@@ -647,7 +639,7 @@ public class Jardin {
 			else {
 				efectoPositivo = false;
 				efectoNegativo = false;
-				abono += 15;
+				abono += 20;
 			}
 			contarTicks(true);
 		}
